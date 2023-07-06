@@ -23,6 +23,7 @@ class Community_cards extends StatefulWidget {
 }
 
 class _CommunityCardsState extends State<Community_cards> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -34,6 +35,8 @@ class _CommunityCardsState extends State<Community_cards> {
     final cardHeight = isPortrait ? screenHeight * 0.1509 : screenWidth * 0.3;
 
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: NavDrawer(),
       bottomNavigationBar: MyBottomAppBar(
         shape: RoundedNotchedRectangle(),
         child: new Row(
@@ -46,7 +49,9 @@ class _CommunityCardsState extends State<Community_cards> {
                 Icons.menu_outlined,
                 semanticLabel: "Show bottom sheet",
               ),
-              onPressed: () {},
+              onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
             ),
           ],
         ),
