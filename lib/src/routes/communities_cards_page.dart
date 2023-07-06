@@ -1,6 +1,6 @@
 import 'package:InstiApp/src/bloc_provider.dart';
 import 'package:InstiApp/src/blocs/community_bloc.dart';
-import 'package:InstiApp/src/routes/queryaddpage.dart';
+import 'package:InstiApp/src/routes/queryaddpage.dart' hide Card;
 import 'package:InstiApp/src/utils/customappbar.dart';
 import 'package:InstiApp/src/drawer.dart';
 import 'package:InstiApp/src/api/model/community.dart';
@@ -65,7 +65,8 @@ class _CommunityCardsState extends State<Community_cards> {
                         TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.search))
+                  IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.notifications_none_outlined))
                 ],
               ),
             ),
@@ -257,13 +258,17 @@ class _CommunityCardsState extends State<Community_cards> {
                                 EdgeInsets.fromLTRB(0, cardHeight / 120, 0, 0),
                             child: IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.more_vert_outlined)))
+                                icon: Icon(Icons.more_vert_outlined))),
+
+
                       ],
                     ),
                   ),
                 ],
               ),
+
             ),
+
           ],
         ),
       ),
