@@ -120,10 +120,13 @@ class _CommunityCardsState extends State<Community_cards> {
                       icon: Icon(Icons.search),
                       color: Colors.black,
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.notifications_none_outlined),
-                      color: Colors.black,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0,0,11,0),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.notifications_none_outlined),
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 ),
@@ -213,7 +216,7 @@ class _CommunityCardsState extends State<Community_cards> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                          height: 0.168 * cardHeight,
+                                          height: 0.145 * cardHeight,
                                           child: Text(
                                             "Insight Discussion Forum",
                                             style: TextStyle(
@@ -224,7 +227,7 @@ class _CommunityCardsState extends State<Community_cards> {
                                           ),
                                         ),
                                         SizedBox(
-                                          height: 0.129 * cardHeight,
+                                          height: 0.09 * cardHeight,
                                           child: Row(
                                             children: [
                                               Text(
@@ -427,9 +430,9 @@ class _CommunityCardsState extends State<Community_cards> {
                                       CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                          height: 0.168 * cardHeight,
+                                          height: 0.145 * cardHeight,
                                           child: Text(
-                                            "Insight Discussion Forum",
+                                            "Academic Discussion Forum",
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
@@ -438,7 +441,7 @@ class _CommunityCardsState extends State<Community_cards> {
                                           ),
                                         ),
                                         SizedBox(
-                                          height: 0.129 * cardHeight,
+                                          height: 0.09 * cardHeight,
                                           child: Row(
                                             children: [
                                               Text(
