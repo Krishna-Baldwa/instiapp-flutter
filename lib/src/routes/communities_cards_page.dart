@@ -55,27 +55,28 @@ class _CommunityCardsState extends State<Community_cards> {
               onPressed: () {
                 _scaffoldKey.currentState?.openDrawer();
               },
-            ),
+            ),IconButton(onPressed: (){} ,icon: Icon(Icons.more_vert_rounded), ),
           ],
         ),
       ),
-      body: SafeArea(
+      body: Container(color: Color.fromARGB(255, 232, 236, 242),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               decoration: BoxDecoration(color: Colors.white),
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
+              child: Container(padding: EdgeInsets.fromLTRB(0, 40, 0, 0),color: Colors.white,width: double.infinity,
                 child: Row(
                   children: [
-                    Text(
-                      'Communities',
-                      style: TextStyle(
-                        fontSize: 35.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      child: Text(
+                        'Communities',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
 
+                        ),
                       ),
                     ),
                     Spacer(),
@@ -153,7 +154,7 @@ class _CommunityCardsState extends State<Community_cards> {
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                          'https://avatars.githubusercontent.com/u/106103465?s=200&v=4',
+                                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT08CUxFOZpdsCzlMwgTgS_1PkrjrmRqcX5_y7JVHKbcH57Ew_wElDxRamsktqGfKca&usqp=CAU',
                                         ),
                                         fit: BoxFit.fill,
                                       ),
@@ -172,7 +173,7 @@ class _CommunityCardsState extends State<Community_cards> {
                                         child: Text(
                                           "Insight Discussion Forum",
                                           style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.w500 ,
                                             color: Colors.white,
                                               fontFamily:"Roboto"
@@ -186,7 +187,7 @@ class _CommunityCardsState extends State<Community_cards> {
                                             Text(
                                               "69 Followers ",
                                               style: TextStyle(
-                                                fontSize: 12,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.w300,
                                                 color: Colors.white,
                                                   fontFamily:"Roboto"
@@ -206,7 +207,7 @@ class _CommunityCardsState extends State<Community_cards> {
                                             Text(
                                               " 3+ New Posts",
                                               style: TextStyle(
-                                                fontSize: 12,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.w300,
                                                 color: Colors.white,
                                                   fontFamily:"Roboto"
@@ -218,11 +219,11 @@ class _CommunityCardsState extends State<Community_cards> {
                                       SizedBox(height: cardHeight * 0.076),
                                       SizedBox(
                                         height: cardHeight * 0.366,
-                                        width: 0.662 * cardWidth,
+                                        width: 0.6 * cardWidth,
                                         child: Text(
                                           "A platform meant to channel discussions on topics and issues pertinent to the student community of IIT Bombay.",
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 10,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.white,
                                             fontFamily: "Roboto"
@@ -234,7 +235,10 @@ class _CommunityCardsState extends State<Community_cards> {
                                 ),
                               ],
                             ),
-                          ],
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(cardWidth*0.83, 0, 0, 0),
+                              child: IconButton(onPressed: (){}, icon: Icon(Icons.more_vert_rounded,color: Colors.white,)),
+                            )],
                         ),
                       ),
                     ),
