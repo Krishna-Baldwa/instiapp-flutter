@@ -86,6 +86,7 @@ flutter:
     - assets/map/
     - assets/communities/
     - assets/communities/emojis/
+    - assets/communities/cards_bg/
     - assets/map/assets/
     - assets/map/assets/map/
   fonts:

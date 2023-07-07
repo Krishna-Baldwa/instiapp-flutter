@@ -25,11 +25,7 @@ class Community_cards extends StatefulWidget {
 
 class _CommunityCardsState extends State<Community_cards> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  var items = [
-    'Join',
-    'Share',
-    'Pin'
-  ];
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -72,12 +68,23 @@ class _CommunityCardsState extends State<Community_cards> {
                 children: [
                   Text(
                     'Communities',
-                    style:
-                        TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 35.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                   Spacer(),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.notifications_none_outlined))
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.search),
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.notifications_none_outlined),
+                    color: Colors.white,
+                  ),
                 ],
               ),
             ),
@@ -85,207 +92,138 @@ class _CommunityCardsState extends State<Community_cards> {
               child: ListView(
                 padding: EdgeInsets.all(16.0),
                 children: [
-                  Ink(
-                    width: cardWidth,
+                  SizedBox(
                     height: cardHeight,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.teal,
-                    ),
-                    child: InkWell(
-                      onTap:() {},
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    width: cardWidth,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Stack(
                         children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                cardHeight * 0.122, cardHeight * 0.122, 0, 0),
-                            width: cardHeight * 0.427,
-                            height: cardHeight * 0.427,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.4),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
+
+                          BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: -10000000000000, sigmaY: -100000000000000),
+                            child: Image.asset(
+                              "assets/communities/cards_bg/groups-default-cover-photo-2x.png",
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
                             ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      'https://avatars.githubusercontent.com/u/106103465?s=200&v=4'),
-                                  fit: BoxFit.fill,
+                          ),ClipRRect( // Clip it cleanly.
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX:2, sigmaY: 3),
+                      child: Container(
+                        color: Colors.black.withOpacity(0.4),
+                        alignment: Alignment.center,
+
+                      ),),),
+
+                          // Card Content
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Profile Image
+                              Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    cardHeight * 0.122,
+                                    cardHeight * 0.122,
+                                    0,
+                                    0),
+                                width: cardHeight * 0.427,
+                                height: cardHeight * 0.427,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.4),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        'https://avatars.githubusercontent.com/u/106103465?s=200&v=4',
+                                      ),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 0.033 * cardWidth,
-                          ),
-                          Container(
-                              margin: EdgeInsets.fromLTRB(
-                                  0, 0.122 * cardHeight, 0, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 0.168 * cardHeight,
-                                    child: Text(
-                                      "DevCom",
-                                      style: TextStyle(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.bold,
+                              SizedBox(width: 0.033 * cardWidth),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    0, 0.122 * cardHeight, 0, 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 0.168 * cardHeight,
+                                      child: Text(
+                                        "DevCom",
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 0.129 * cardHeight,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "69 Followers",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
+                                    SizedBox(
+                                      height: 0.129 * cardHeight,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "69 Followers",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          "  3+ New Posts",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
+                                          Text(
+                                            "  3+ New Posts",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        )
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: cardHeight * 0.076,
-                                  ),
-                                  SizedBox(
+                                    SizedBox(height: cardHeight * 0.076),
+                                    SizedBox(
                                       height: cardHeight * 0.366,
                                       width: 0.662 * cardWidth,
                                       child: Text(
                                         "Vedant is a Core Team\nMember",
                                         style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w100),
-                                      ))
-                                ],
-                              )),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, cardHeight / 120,0 , 0),
-                              child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.more_vert_outlined)))
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w100,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  Container(
-                    width: cardWidth,
-                    height: cardHeight,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.teal,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(
-                              cardWidth / 15, cardHeight / 8, 0, 0),
-                          width: cardHeight / 2.2,
-                          height: cardHeight / 2.2,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.4),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://avatars.githubusercontent.com/u/106103465?s=200&v=4'),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                            margin: EdgeInsets.fromLTRB(
-                                cardWidth / 15, cardHeight / 15, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "DevCom",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "69 Followers",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      "  3+ New Posts",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Vedant is a Core Team\nMember",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w100),
-                                )
-                              ],
-                            )),
-                        Spacer(),
-                        Container(
-                            margin: EdgeInsets.fromLTRB(0, cardHeight / 120,0 , 0),
-                            child: IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.more_vert_outlined)))
-
-
-                      ],
-                    ),
-                  ),
                 ],
               ),
-
             ),
-
           ],
         ),
       ),
     );
   }
 }
+
