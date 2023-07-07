@@ -8,6 +8,7 @@ import 'package:InstiApp/src/routes/communitydetails.dart';
 import 'package:InstiApp/src/api/model/body.dart';
 import 'package:InstiApp/src/utils/common_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'dart:ui';
@@ -72,6 +73,7 @@ class _CommunityCardsState extends State<Community_cards> {
                       fontSize: 35.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
+
                     ),
                   ),
                   Spacer(),
@@ -163,11 +165,12 @@ class _CommunityCardsState extends State<Community_cards> {
                                     SizedBox(
                                       height: 0.168 * cardHeight,
                                       child: Text(
-                                        "DevCom",
+                                        "Insight Discussion Forum",
                                         style: TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500 ,
                                           color: Colors.white,
+                                            fontFamily:"Roboto"
                                         ),
                                       ),
                                     ),
@@ -176,19 +179,32 @@ class _CommunityCardsState extends State<Community_cards> {
                                       child: Row(
                                         children: [
                                           Text(
-                                            "69 Followers",
+                                            "69 Followers ",
                                             style: TextStyle(
                                               fontSize: 12,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.w300,
                                               color: Colors.white,
+                                                fontFamily:"Roboto"
                                             ),
                                           ),
+                                          Icon(//need to make this a bullet point instead of a period
+                                            Icons.circle,
+                                            color: Colors.white,
+                                            size: 3,
+                                            // style: TextStyle(
+                                            //     fontSize: 12,
+                                            //     fontWeight: FontWeight.w500,
+                                            //     color: Colors.white,
+                                            //     fontFamily:"Roboto"
+                                            // ),
+                                          ),
                                           Text(
-                                            "  3+ New Posts",
+                                            " 3+ New Posts",
                                             style: TextStyle(
                                               fontSize: 12,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.w300,
                                               color: Colors.white,
+                                                fontFamily:"Roboto"
                                             ),
                                           ),
                                         ],
@@ -199,11 +215,12 @@ class _CommunityCardsState extends State<Community_cards> {
                                       height: cardHeight * 0.366,
                                       width: 0.662 * cardWidth,
                                       child: Text(
-                                        "Vedant is a Core Team\nMember",
+                                        "A platform meant to channel discussions on topics and issues pertinent to the student community of IIT Bombay.",
                                         style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w100,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
                                           color: Colors.white,
+                                          fontFamily: "Roboto"
                                         ),
                                       ),
                                     ),
