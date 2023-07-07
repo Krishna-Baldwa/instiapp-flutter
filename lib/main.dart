@@ -4,6 +4,7 @@ import 'package:InstiApp/src/routes/aboutpage.dart';
 import 'package:InstiApp/src/routes/bodypage.dart';
 import 'package:InstiApp/src/routes/calendarpage.dart';
 import 'package:InstiApp/src/routes/communitydetails.dart';
+import 'package:InstiApp/src/routes/communitypage.dart';
 import 'package:InstiApp/src/routes/communitypostpage.dart';
 import 'package:InstiApp/src/routes/event_form.dart';
 // import 'package:InstiApp/src/routes/complaintpage.dart';
@@ -308,6 +309,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   return _buildRoute(settings, ExplorePage());
                 case "/calendar":
                   return _buildRoute(settings, CalendarPage());
+                case "/idf":
+                  return _buildRoute(settings, CommunityPage());
                 // case "/complaints":
                 //   return _buildRoute(settings, ComplaintsPage());
                 // case "/newcomplaint":

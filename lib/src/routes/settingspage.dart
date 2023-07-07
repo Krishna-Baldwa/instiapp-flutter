@@ -173,7 +173,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       "/map": "Map",
                       // "/settings": "Settings",
                       //TODO: Change to communities
-                      "/groups": "Insight Discussion Forum",
+                      "/groups": "Communities",
                     }.entries.map((entry) {
                       return DropdownMenuItem<String>(
                         value: entry.key,

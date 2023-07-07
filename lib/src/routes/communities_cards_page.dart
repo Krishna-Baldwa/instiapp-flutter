@@ -70,13 +70,13 @@ class _CommunityCardsState extends State<Community_cards> {
             Container(
               decoration: BoxDecoration(color: Colors.white),
               child: Container(
-                padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 color: Colors.white,
                 width: double.infinity,
                 child: Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(21, 0, 0, 0),
                       child: Text(
                         'Communities',
                         style: TextStyle(
@@ -106,7 +106,7 @@ class _CommunityCardsState extends State<Community_cards> {
                 child: ListView(
                   padding: EdgeInsets.all(16.0),
                   children: [
-                    InkWell(onTap: (){debugPrint('InkWell tapped');},
+                    InkWell(onTap: (){Navigator.of(context).pushNamed("/idf");},
                       child: SizedBox(
                         height: cardHeight,
                         width: cardWidth,
