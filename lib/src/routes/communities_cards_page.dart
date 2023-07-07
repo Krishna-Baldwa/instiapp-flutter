@@ -33,8 +33,8 @@ class _CommunityCardsState extends State<Community_cards> {
 
     final isPortrait = screenHeight > screenWidth;
 
-    final cardWidth = isPortrait ? screenWidth * 0.958 : screenHeight * 0.6;
-    final cardHeight = isPortrait ? screenHeight * 0.1509 : screenWidth * 0.3;
+    final cardWidth = isPortrait ? screenWidth * 0.958 : screenHeight * 0.958;
+    final cardHeight = isPortrait ? screenHeight * 0.1509 : screenWidth * 0.1509;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -55,9 +55,36 @@ class _CommunityCardsState extends State<Community_cards> {
                 _scaffoldKey.currentState?.openDrawer();
               },
             ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.more_vert_rounded),
+            PopupMenuButton<String>(
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    value: 'bookmark',
+                    child: ListTile(
+                      leading: Icon(Icons.bookmark),
+                      title: Text('Bookmark'),
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'profile',
+                    child: ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text('Profile'),
+                    ),
+                  ),
+                ];
+              },
+              onSelected: (String value) {
+                if (value == 'bookmark') {
+                  // Handle bookmark action
+                } else if (value == 'profile') {
+                  // Handle profile action
+                }
+              },
+              icon: Icon(
+                Icons.more_vert_rounded,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
@@ -107,8 +134,11 @@ class _CommunityCardsState extends State<Community_cards> {
                 child: ListView(
                   padding: EdgeInsets.all(16.0),
                   children: [
-                    InkWell(//bug- Inks splashes not visible, might have to use Ink()
-                      onTap: (){Navigator.of(context).pushNamed("/idf");},
+                    InkWell(
+                      //bug- Inks splashes not visible, might have to use Ink()
+                      onTap: () {
+                        Navigator.of(context).pushNamed("/idf");
+                      },
                       child: SizedBox(
                         height: cardHeight,
                         width: cardWidth,
@@ -129,7 +159,8 @@ class _CommunityCardsState extends State<Community_cards> {
                               ),
                               ClipRRect(
                                 child: BackdropFilter(
-                                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 3),
+                                  filter:
+                                      ImageFilter.blur(sigmaX: 2, sigmaY: 3),
                                   child: Container(
                                     color: Colors.black.withOpacity(0.4),
                                     alignment: Alignment.center,
@@ -246,32 +277,82 @@ class _CommunityCardsState extends State<Community_cards> {
                                 ],
                               ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    cardWidth * 0.83, 0, 0, 0),
-                                child: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.more_vert_rounded,
-                                      color: Colors.white,
-                                    )),
+                                padding: EdgeInsets.fromLTRB(cardWidth * 0.83, 0, 0, 0),
+                                child: PopupMenuButton<String>(
+                                  elevation: 100,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  itemBuilder: (BuildContext context) {
+                                    return <PopupMenuEntry<String>>[
+                                      PopupMenuItem<String>(
+                                        value: 'join',
+                                        child: Container(
+
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.add),
+                                              SizedBox(width: 8.0),
+                                              Text('Join'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      PopupMenuItem<String>(
+                                        value: 'share',
+                                        child: Container(
+
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.share),
+                                              SizedBox(width: 8.0),
+                                              Text('Share'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      PopupMenuItem<String>(
+                                        value: 'pin',
+                                        child: Container(
+
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.push_pin),
+                                              SizedBox(width: 8.0),
+                                              Text('Pin'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ];
+                                  },
+                                  onSelected: (String value) {
+                                    if (value == 'join') {
+
+                                    } else if (value == 'share') {
+
+                                    } else if (value == 'pin') {
+
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.more_vert_rounded,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               )
+
+
                             ],
                           ),
                         ),
                       ),
-                    ),
-                    // SizedBox(height: 16.0),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              child: Expanded(
-                child: ListView(
-                  padding: EdgeInsets.all(16.0),
-                  children: [
-                    InkWell(//bug- Inks splashes not visible, might have to use Ink()
-                      onTap: (){Navigator.of(context).pushNamed("/idf");},
+                    ),SizedBox(height: screenHeight/100),
+                    InkWell(
+                      //bug- Inks splashes not visible, might have to use Ink()
+                      onTap: () {
+                        Navigator.of(context).pushNamed("/idf");
+                      },
                       child: SizedBox(
                         height: cardHeight,
                         width: cardWidth,
@@ -292,7 +373,8 @@ class _CommunityCardsState extends State<Community_cards> {
                               ),
                               ClipRRect(
                                 child: BackdropFilter(
-                                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 3),
+                                  filter:
+                                  ImageFilter.blur(sigmaX: 2, sigmaY: 3),
                                   child: Container(
                                     color: Colors.black.withOpacity(0.4),
                                     alignment: Alignment.center,
@@ -409,21 +491,76 @@ class _CommunityCardsState extends State<Community_cards> {
                                 ],
                               ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    cardWidth * 0.83, 0, 0, 0),
-                                child: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.more_vert_rounded,
-                                      color: Colors.white,
-                                    )),
+                                padding: EdgeInsets.fromLTRB(cardWidth * 0.83, 0, 0, 0),
+                                child: PopupMenuButton<String>(
+                                  elevation: 100,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  itemBuilder: (BuildContext context) {
+                                    return <PopupMenuEntry<String>>[
+                                      PopupMenuItem<String>(
+                                        value: 'join',
+                                        child: Container(
+
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.add),
+                                              SizedBox(width: 8.0),
+                                              Text('Join'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      PopupMenuItem<String>(
+                                        value: 'share',
+                                        child: Container(
+
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.share),
+                                              SizedBox(width: 8.0),
+                                              Text('Share'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      PopupMenuItem<String>(
+                                        value: 'pin',
+                                        child: Container(
+
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.push_pin),
+                                              SizedBox(width: 8.0),
+                                              Text('Pin'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ];
+                                  },
+                                  onSelected: (String value) {
+                                    if (value == 'join') {
+
+                                    } else if (value == 'share') {
+
+                                    } else if (value == 'pin') {
+
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.more_vert_rounded,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               )
                             ],
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    // SizedBox(height: 16.0),
                   ],
                 ),
               ),
