@@ -33,8 +33,8 @@ class _CommunityCardsState extends State<Community_cards> {
 
     final isPortrait = screenHeight > screenWidth;
 
-    final cardWidth = isPortrait ? screenWidth * 0.958 : screenHeight * 0.958;
-    final cardHeight = isPortrait ? screenHeight * 0.1509 : screenWidth * 0.1509;
+    final cardWidth = isPortrait ? screenWidth * 0.958 : screenHeight * 02.4;
+    final cardHeight = isPortrait ? screenHeight * 0.1509 : screenWidth *0.3;
 
     return Scaffold(
       key: _scaffoldKey,
