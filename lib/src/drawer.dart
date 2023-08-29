@@ -261,6 +261,17 @@ class _NavDrawerState extends State<NavDrawer> {
                         highlight: indexSnapshot.data == 16,
                         selected: indexSnapshot.data == 16,
                       ),
+                      18: NavListTile(
+                        icon: Icons.stadium_outlined,
+
+                        title: "GC Leaderboard",
+                        onTap: () {
+                          changeSelection(18, drawerState!);
+                          navigateNamed('/gc_leaderboard');
+                        },
+                        highlight: indexSnapshot.data == 18,
+                        selected: indexSnapshot.data == 18,
+                      ),
                     };
 
                     List<Widget> navList, navDownList = <Widget>[];
@@ -678,6 +689,7 @@ class MNavigatorObserver extends NavigatorObserver {
     "/groups": 15,
     //"/InSeek": 16,
     "/buyandsell": 17,
+    "/gc_leaderboard":18,
 
   };
 
@@ -706,6 +718,7 @@ class MNavigatorObserver extends NavigatorObserver {
     "/groups": "Groups",
     "/buyandsell": "Buy and Sell",
     "n/a": "",
+    "/gc_leaderboard":"GC Leaderboard",
   };
 
   String startsWith(String routeName) {

@@ -16,6 +16,7 @@ import 'package:InstiApp/src/routes/eventpage.dart';
 import 'package:InstiApp/src/routes/explorepage.dart';
 import 'package:InstiApp/src/routes/externalblogpage.dart';
 import 'package:InstiApp/src/routes/feedpage.dart';
+import 'package:InstiApp/src/routes/gc_leaderboard.dart';
 import 'package:InstiApp/src/routes/mappage.dart';
 import 'package:InstiApp/src/routes/messcalendarpage.dart';
 // import 'package:InstiApp/src/routes/newcomplaintpage.dart';
@@ -307,6 +308,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   return _buildRoute(settings, TrainingBlogPage());
                 case "/feed":
                   return _buildRoute(settings, FeedPage());
+
                 case "/alumniLoginPage":
                   return _buildRoute(settings, AlumniLoginPage());
                 case "/alumni-OTP-Page":
@@ -369,6 +371,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   return _buildRoute(settings, MessCalendarPage());
                 case "/messcalendar/qr":
                   return _buildRoute(settings, QRPage());
+                case "/gc_leaderboard":
+                  return _buildRoute(settings, gcl_cards());
               }
             }
             return _buildRoute(
