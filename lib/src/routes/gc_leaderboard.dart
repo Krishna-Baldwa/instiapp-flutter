@@ -96,6 +96,183 @@ final Map<String, List<String>> differentGCs = {
   'Tech GC': ['Bot GC', 'Drone GC', 'Race GC'],
 };
 
+final Map<String, List<String>> GCranking ={
+
+  'Football GC': [
+    "Hostel6",
+    "Hostel4",
+    "Hostel7",
+    "Hostel3",
+    "Hostel1",
+    "Hostel5",
+    "Hostel10",
+    "Hostel11",
+    "Hostel2",
+    "Hostel13",
+    "Hostel9",
+    "Hostel8",
+    "Hostel12",
+    "Hostel14",
+    "Tansa"
+  ],
+  'Race GC': [
+    "Hostel6",
+    "Hostel7",
+    "Hostel4",
+    "Hostel3",
+    "Hostel1",
+    "Hostel5",
+    "Hostel10",
+    "Hostel11",
+    "Hostel2",
+    "Hostel13",
+    "Hostel9",
+    "Hostel8",
+    "Hostel12",
+    "Hostel14",
+    "Tansa"
+  ],
+  'Drone GC': [
+    "Hostel4",
+    "Hostel6",
+    "Hostel12",
+    "Hostel10",
+    "Hostel7",
+    "Hostel9",
+    "Hostel2",
+    "Hostel13",
+    "Hostel1",
+    "Hostel11",
+    "Hostel8",
+    "Hostel3",
+    "Hostel14",
+    "Tansa",
+    "Hostel5"
+  ],
+  'Bot GC': [
+    "Hostel11",
+    "Hostel3",
+    "Hostel5",
+    "Hostel2",
+    "Hostel9",
+    "Hostel7",
+    "Hostel8",
+    "Hostel13",
+    "Hostel1",
+    "Hostel6",
+    "Hostel14",
+    "Hostel12",
+    "Tansa",
+    "Hostel10",
+    "Hostel4"
+  ],
+
+  'Dramatics GC': [
+    "Hostel6",
+    "Hostel4",
+    "Hostel7",
+    "Hostel3",
+    "Hostel1",
+    "Hostel5",
+    "Hostel10",
+    "Hostel11",
+    "Hostel2",
+    "Hostel13",
+    "Hostel9",
+    "Hostel8",
+    "Hostel12",
+    "Hostel14",
+    "Tansa"
+  ],
+  'Chess GC': [
+    "Hostel6",
+    "Hostel7",
+    "Hostel4",
+    "Hostel3",
+    "Hostel1",
+    "Hostel5",
+    "Hostel10",
+    "Hostel11",
+    "Hostel2",
+    "Hostel13",
+    "Hostel9",
+    "Hostel8",
+    "Hostel12",
+    "Hostel14",
+    "Tansa"
+  ],
+  'Basketball GC': [
+    "Hostel4",
+    "Hostel6",
+    "Hostel12",
+    "Hostel10",
+    "Hostel7",
+    "Hostel9",
+    "Hostel2",
+    "Hostel13",
+    "Hostel1",
+    "Hostel11",
+    "Hostel8",
+    "Hostel3",
+    "Hostel14",
+    "Tansa",
+    "Hostel5"
+  ],
+  'Chess GC': [
+    "Hostel11",
+    "Hostel3",
+    "Hostel5",
+    "Hostel2",
+    "Hostel9",
+    "Hostel7",
+    "Hostel8",
+    "Hostel13",
+    "Hostel1",
+    "Hostel6",
+    "Hostel14",
+    "Hostel12",
+    "Tansa",
+    "Hostel10",
+    "Hostel4"
+  ],
+
+  'Dance GC': [
+    "Hostel4",
+    "Hostel6",
+    "Hostel12",
+    "Hostel10",
+    "Hostel7",
+    "Hostel9",
+    "Hostel2",
+    "Hostel13",
+    "Hostel1",
+    "Hostel11",
+    "Hostel8",
+    "Hostel3",
+    "Hostel14",
+    "Tansa",
+    "Hostel5"
+  ],
+  'Music GC': [
+    "Hostel11",
+    "Hostel3",
+    "Hostel5",
+    "Hostel2",
+    "Hostel9",
+    "Hostel7",
+    "Hostel8",
+    "Hostel13",
+    "Hostel1",
+    "Hostel6",
+    "Hostel14",
+    "Hostel12",
+    "Tansa",
+    "Hostel10",
+    "Hostel4"
+  ],
+
+};
+
 final List<String> items = initial;
 
 
@@ -256,14 +433,14 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
                           return ListTile(
                             title: Row(
                               children: [
-                                Text('$itemNumber. ', style: theme.textTheme.headline5),
+                                Text('$itemNumber. ', style: theme.textTheme.bodyText1),
                                 Image.asset(
                                   'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,height: 80,width: 80,
+                                  fit: BoxFit.fill,height: 60,width: 60,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
-                                  child: Text(rankingItem, style: theme.textTheme.headline5),
+                                  child: Text(rankingItem, style: theme.textTheme.bodyLarge),
                                 ),
                               ],
                             ),
@@ -272,13 +449,13 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
                       ),ListView.builder(
                         itemCount: widget.gcCompetitions.length,
                         itemBuilder: (context, index) {
-                          final rankingItem = widget.gcCompetitions[index];
+                          final String rankingItem = widget.gcCompetitions[index];
 
 
                           return ListTile(
                             title: InkWell(onTap: (){Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => particular_gc()
+                                  builder: (context) => particular_gc(gcname: rankingItem,Ranking: GCranking[rankingItem] ?? [],)
                               ),);},
                               child: Row(
                                 children: [Spacer(),
@@ -382,14 +559,14 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
                     return ListTile(
                       title: Row(
                         children: [
-                          Text('$itemNumber. ', style: theme.textTheme.headline5),
+                          Text('$itemNumber. ', style: theme.textTheme.bodyText1),
                           Image.asset(
                             'assets/buynsell/DevcomLogo.png',
-                            fit: BoxFit.fill,height: 80,width: 80,
+                            fit: BoxFit.fill,height: 50,width: 50,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Text(rankingItem, style: theme.textTheme.headline5),
+                            child: Text(rankingItem, style: theme.textTheme.bodyLarge),
                           ),
                         ],
                       ),
@@ -404,32 +581,32 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
                     return ListTile(
                       title: InkWell(onTap: (){Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => particular_gc()
+                            builder: (context) => particular_gc(gcname: rankingItem,Ranking: GCranking[rankingItem] ?? [],)
                           ),);},
                         child: Row(
                           children: [Spacer(),
 
 
-                            Text(rankingItem, style: theme.textTheme.headline5),Spacer(),Column(
+                            Text(rankingItem, style: theme.textTheme.titleMedium),Spacer(),Column(
                               children: [
                                 Image.asset(
                                   'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,height: 80,width: 80,
-                                ),Text("Hostel 1")
+                                  fit: BoxFit.fill,height: 40,width: 40,
+                                ),Text(GCranking[rankingItem]![0].toString(),style: theme.textTheme.bodySmall)
                               ],
                             ),Spacer(),Column(
                               children: [
                                 Image.asset(
                                   'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,height: 80,width: 80,
-                                ),Text("Hostel 3")
+                                  fit: BoxFit.fill,height: 40,width: 40,
+                                ),Text(GCranking[rankingItem]![1].toString(),style: theme.textTheme.bodySmall)
                               ],
                             ),Spacer(),Column(
                               children: [
                                 Image.asset(
                                   'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,height: 80,width: 80,
-                                ),Text("Hostel 16")
+                                  fit: BoxFit.fill,height: 40,width: 40,
+                                ),Text(GCranking[rankingItem]![2].toString(),style: theme.textTheme.bodySmall)
                               ],
                             ),Spacer()
                           ],
@@ -452,15 +629,53 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
 
 class particular_gc extends StatefulWidget {
 
+  final String gcname;
+  final List<String> Ranking;
 
   @override
+  particular_gc({required this.gcname, required this.Ranking});
   State<particular_gc> createState() => _particular_gcState();
 }
 
 class _particular_gcState extends State<particular_gc> {
   @override
+
   Widget build(BuildContext context) {
-    return const Placeholder();
+    var theme = Theme.of(context);
+    return Scaffold(body: SafeArea(
+      child: Column(children: [Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Text(widget.gcname,style: theme.textTheme.headline3,),
+      ),Expanded(
+        child: ListView.builder(
+            itemCount: widget.Ranking.length,
+            itemBuilder: (context, index) {
+              final hostelName = widget.Ranking[index];
+              final hostelPoints = widget.Ranking[index];
+              int itemnumber = index+1;
+
+              return ListTile(
+
+                title: Row(
+                  children: [
+                    Text('$itemnumber. ', style: theme.textTheme.bodyText1),
+                    Image.asset(
+                      'assets/buynsell/DevcomLogo.png',
+                      fit: BoxFit.fill,height: 50,width: 50,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(hostelName, style: theme.textTheme.bodyLarge),
+
+
+                    ),Spacer(),IconButton(onPressed: (){}, icon: Icon(Icons.expand_less_rounded),iconSize: 20,color: Colors.green,),Spacer(),
+                    Text((11-itemnumber).toString(), style: theme.textTheme.titleMedium),Spacer(),IconButton(onPressed: (){}, icon: Icon(Icons.expand_more_rounded),iconSize: 20,color: Colors.red,),Spacer(),
+                  ],
+                ),
+              );
+            }),
+      ),],),
+    ),);
   }
 }
 
