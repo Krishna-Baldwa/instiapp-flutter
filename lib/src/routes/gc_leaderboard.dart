@@ -96,8 +96,7 @@ final Map<String, List<String>> differentGCs = {
   'Tech GC': ['Bot GC', 'Drone GC', 'Race GC'],
 };
 
-final Map<String, List<String>> GCranking ={
-
+final Map<String, List<String>> GCranking = {
   'Football GC': [
     "Hostel6",
     "Hostel4",
@@ -166,7 +165,6 @@ final Map<String, List<String>> GCranking ={
     "Hostel10",
     "Hostel4"
   ],
-
   'Dramatics GC': [
     "Hostel6",
     "Hostel4",
@@ -235,7 +233,6 @@ final Map<String, List<String>> GCranking ={
     "Hostel10",
     "Hostel4"
   ],
-
   'Dance GC': [
     "Hostel4",
     "Hostel6",
@@ -270,19 +267,13 @@ final Map<String, List<String>> GCranking ={
     "Hostel10",
     "Hostel4"
   ],
-
 };
 
 final List<String> items = initial;
 
-
-
-
-
 class gcl_cards extends StatefulWidget {
   @override
   State<gcl_cards> createState() => _gcl_cardsState();
-
 }
 
 class _gcl_cardsState extends State<gcl_cards> {
@@ -368,16 +359,18 @@ class GCRankings extends StatefulWidget {
   final List<String> gcRanking;
   final List<String> gcCompetitions;
 
-  GCRankings({required this.gcName, required this.gcRanking,required this.gcCompetitions});
+  GCRankings(
+      {required this.gcName,
+      required this.gcRanking,
+      required this.gcCompetitions});
 
   @override
   State<GCRankings> createState() => _GCRankingsState();
 }
 
-class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
+class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   late TabController _tabController;
-
 
   @override
   void initState() {
@@ -389,7 +382,9 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     var theme = Theme.of(context);
-    if(widget.gcName == 'Overall'){return Scaffold(      key: _scaffoldKey,
+    if (widget.gcName == 'Overall') {
+      return Scaffold(
+        key: _scaffoldKey,
         drawer: NavDrawer(),
         bottomNavigationBar: MyBottomAppBar(
           shape: RoundedNotchedRectangle(),
@@ -422,79 +417,103 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
                   style: theme.textTheme.headline3,
                 ),
               ),
-
               Expanded(
-                  child: TabBarView(controller: _tabController,
-                      children: [ListView.builder(
-                        itemCount: widget.gcRanking.length,
-                        itemBuilder: (context, index) {
-                          final rankingItem = widget.gcRanking[index];
-                          int itemNumber = index + 1;
-                          return ListTile(
-                            title: Row(
+                  child: TabBarView(controller: _tabController, children: [
+                ListView.builder(
+                  itemCount: widget.gcRanking.length,
+                  itemBuilder: (context, index) {
+                    final rankingItem = widget.gcRanking[index];
+                    int itemNumber = index + 1;
+                    return ListTile(
+                      title: Row(
+                        children: [
+                          Text('$itemNumber. ',
+                              style: theme.textTheme.bodyText1),
+                          Image.asset(
+                            'assets/buynsell/DevcomLogo.png',
+                            fit: BoxFit.fill,
+                            height: 60,
+                            width: 60,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(rankingItem,
+                                style: theme.textTheme.bodyLarge),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                ListView.builder(
+                  itemCount: widget.gcCompetitions.length,
+                  itemBuilder: (context, index) {
+                    final String rankingItem = widget.gcCompetitions[index];
+
+                    return ListTile(
+                      title: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => particular_gc(
+                                      gcname: rankingItem,
+                                      Ranking: GCranking[rankingItem] ?? [],
+                                    )),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Text(rankingItem, style: theme.textTheme.headline5),
+                            Spacer(),
+                            Column(
                               children: [
-                                Text('$itemNumber. ', style: theme.textTheme.bodyText1),
                                 Image.asset(
                                   'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,height: 60,width: 60,
+                                  fit: BoxFit.fill,
+                                  height: 80,
+                                  width: 80,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(rankingItem, style: theme.textTheme.bodyLarge),
-                                ),
+                                Text("Hostel 1")
                               ],
                             ),
-                          );
-                        },
-                      ),ListView.builder(
-                        itemCount: widget.gcCompetitions.length,
-                        itemBuilder: (context, index) {
-                          final String rankingItem = widget.gcCompetitions[index];
-
-
-                          return ListTile(
-                            title: InkWell(onTap: (){Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => particular_gc(gcname: rankingItem,Ranking: GCranking[rankingItem] ?? [],)
-                              ),);},
-                              child: Row(
-                                children: [Spacer(),
-
-
-                                  Text(rankingItem, style: theme.textTheme.headline5),Spacer(),Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/buynsell/DevcomLogo.png',
-                                        fit: BoxFit.fill,height: 80,width: 80,
-                                      ),Text("Hostel 1")
-                                    ],
-                                  ),Spacer(),Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/buynsell/DevcomLogo.png',
-                                        fit: BoxFit.fill,height: 80,width: 80,
-                                      ),Text("Hostel 3")
-                                    ],
-                                  ),Spacer(),Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/buynsell/DevcomLogo.png',
-                                        fit: BoxFit.fill,height: 80,width: 80,
-                                      ),Text("Hostel 16")
-                                    ],
-                                  ),Spacer()
-                                ],
-                              ),
+                            Spacer(),
+                            Column(
+                              children: [
+                                Image.asset(
+                                  'assets/buynsell/DevcomLogo.png',
+                                  fit: BoxFit.fill,
+                                  height: 80,
+                                  width: 80,
+                                ),
+                                Text("Hostel 3")
+                              ],
                             ),
-                          );
-                        },
-                      ),]
-                  )
-
-              )
+                            Spacer(),
+                            Column(
+                              children: [
+                                Image.asset(
+                                  'assets/buynsell/DevcomLogo.png',
+                                  fit: BoxFit.fill,
+                                  height: 80,
+                                  width: 80,
+                                ),
+                                Text("Hostel 16")
+                              ],
+                            ),
+                            Spacer()
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ]))
             ],
           ),
-        ),);}
+        ),
+      );
+    }
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavDrawer(),
@@ -538,86 +557,130 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
                     style: theme.textTheme.headline6,
                   ),
                 ),
-
                 Tab(
                   child: Text(
                     "Competitions",
                     style: theme.textTheme.headline6,
                   ),
                 ),
-
               ],
             ),
-            
             Expanded(
-              child: TabBarView(controller: _tabController,
-                children: [ListView.builder(
-                  itemCount: widget.gcRanking.length,
-                  itemBuilder: (context, index) {
-                    final rankingItem = widget.gcRanking[index];
-                    int itemNumber = index + 1;
-                    return ListTile(
-                      title: Row(
+                child: TabBarView(controller: _tabController, children: [
+              ListView.builder(
+                itemCount: widget.gcRanking.length,
+                itemBuilder: (context, index) {
+                  final rankingItem = widget.gcRanking[index];
+                  int itemNumber = index + 1;
+                  return ListTile(
+                    title: Row(
+                      children: [
+                        Text('$itemNumber. ', style: theme.textTheme.bodyText1),
+                        Image.asset(
+                          'assets/buynsell/DevcomLogo.png',
+                          fit: BoxFit.fill,
+                          height: 50,
+                          width: 50,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(rankingItem,
+                              style: theme.textTheme.bodyLarge),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              ListView.builder(
+                itemCount: widget.gcCompetitions.length,
+                itemBuilder: (context, index) {
+                  final rankingItem = widget.gcCompetitions[index];
+
+                  return ListTile(
+                    title: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => particular_gc(
+                                    gcname: rankingItem,
+                                    Ranking: GCranking[rankingItem] ?? [],
+                                  )),
+                        );
+                      },
+                      child: Column(
                         children: [
-                          Text('$itemNumber. ', style: theme.textTheme.bodyText1),
-                          Image.asset(
-                            'assets/buynsell/DevcomLogo.png',
-                            fit: BoxFit.fill,height: 50,width: 50,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(rankingItem, style: theme.textTheme.bodyLarge),
-                          ),
+                          Row(
+                            children: [
+                              Spacer(),
+                              SizedBox(
+                                  width: width / 4,
+                                  child: Text(rankingItem,
+                                      style: theme.textTheme.headline6)),
+                              Spacer(),
+                              SizedBox(
+                                width: width / 6 ,
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/buynsell/DevcomLogo.png',
+                                      fit: BoxFit.fill,
+                                      height: 60,
+                                      width: 60,
+                                    ),
+                                    FittedBox(
+                                      child: Text(GCranking[rankingItem]![0].toString(),
+                                          style: theme.textTheme.bodyLarge),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
+                              SizedBox(
+                                width: width / 6,
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/buynsell/DevcomLogo.png',
+                                      fit: BoxFit.fill,
+                                      height: 60,
+                                      width: 60,
+                                    ),
+                                    FittedBox(
+                                      child: Text(GCranking[rankingItem]![1].toString(),
+                                          style: theme.textTheme.bodyLarge),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
+                              SizedBox(
+                                width: width / 6,
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/buynsell/DevcomLogo.png',
+                                      fit: BoxFit.fill,
+                                      height: 60,
+                                      width: 60,
+                                    ),
+                                    FittedBox(
+                                      child: Text(GCranking[rankingItem]![2].toString(),
+                                          style: theme.textTheme.bodyLarge),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Spacer()
+                            ],
+                          ),SizedBox(height: 10,)
                         ],
                       ),
-                    );
-                  },
-                ),ListView.builder(
-                  itemCount: widget.gcCompetitions.length,
-                  itemBuilder: (context, index) {
-                    final rankingItem = widget.gcCompetitions[index];
-
-
-                    return ListTile(
-                      title: InkWell(onTap: (){Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => particular_gc(gcname: rankingItem,Ranking: GCranking[rankingItem] ?? [],)
-                          ),);},
-                        child: Row(
-                          children: [Spacer(),
-
-
-                            Text(rankingItem, style: theme.textTheme.titleMedium),Spacer(),Column(
-                              children: [
-                                Image.asset(
-                                  'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,height: 40,width: 40,
-                                ),Text(GCranking[rankingItem]![0].toString(),style: theme.textTheme.bodySmall)
-                              ],
-                            ),Spacer(),Column(
-                              children: [
-                                Image.asset(
-                                  'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,height: 40,width: 40,
-                                ),Text(GCranking[rankingItem]![1].toString(),style: theme.textTheme.bodySmall)
-                              ],
-                            ),Spacer(),Column(
-                              children: [
-                                Image.asset(
-                                  'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,height: 40,width: 40,
-                                ),Text(GCranking[rankingItem]![2].toString(),style: theme.textTheme.bodySmall)
-                              ],
-                            ),Spacer()
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),]
-              )
-
-            )
+                    ),
+                  );
+                },
+              ),
+            ]))
           ],
         ),
       ),
@@ -625,10 +688,7 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin{
   }
 }
 
-
-
 class particular_gc extends StatefulWidget {
-
   final String gcname;
   final List<String> Ranking;
 
@@ -639,43 +699,112 @@ class particular_gc extends StatefulWidget {
 
 class _particular_gcState extends State<particular_gc> {
   @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    var theme = Theme.of(context);
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                widget.gcname,
+                style: theme.textTheme.headline3,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: widget.Ranking.length,
+                  itemBuilder: (context, index) {
+                    final hostelName = widget.Ranking[index];
+                    final hostelPoints = widget.Ranking[index];
+                    int itemnumber = index + 1;
+
+                    return ListTile(
+                      title: Row(
+                        children: [
+                          SizedBox(
+                              width: width * 1 / 8,
+                              child: Center(
+                                  child: Text('$itemnumber. ',
+                                      style: theme.textTheme.bodyText1))),
+                          Image.asset(
+                            'assets/buynsell/DevcomLogo.png',
+                            fit: BoxFit.fill,
+                            height: 50,
+                            width: 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: FittedBox(
+                                child: SizedBox(
+                              child: Text(hostelName,
+                                  style: theme.textTheme.bodyLarge),
+                              width: width * 2 / 8,
+                            )),
+                          ),
+                          Spacer(),
+                          FittedBox(
+                              child: SizedBox(
+                            child: Center(
+                                child: Text((11 - itemnumber).toString(),
+                                    style: theme.textTheme.titleMedium)),
+                            width: width * 1 / 8,
+                          )),
+                          Spacer(),
+                          FittedBox(
+                              child: Center(
+                                  child: SizedBox(width: width/6,
+                                    child: TextButton(
+                                        onPressed: () {Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                            builder: (context) => numpad(hostelname: hostelName,gcname: widget.gcname,gcpreviouspoints: (11-itemnumber),)));},
+                                        child: Text(
+                                          "Edit",
+                                        )),
+                                  ))),
+                          Spacer()
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class numpad extends StatefulWidget {
+
+  final String hostelname;
+  final String gcname;
+  final int gcpreviouspoints;
+
+  numpad({required this.gcname,required this.hostelname,required this.gcpreviouspoints});
+  @override
+  State<numpad> createState() => _numpadState();
+}
+
+class _numpadState extends State<numpad> {
+  @override
 
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     var theme = Theme.of(context);
-    return Scaffold(body: SafeArea(
-      child: Column(children: [Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Text(widget.gcname,style: theme.textTheme.headline3,),
-      ),Expanded(
-        child: ListView.builder(
-            itemCount: widget.Ranking.length,
-            itemBuilder: (context, index) {
-              final hostelName = widget.Ranking[index];
-              final hostelPoints = widget.Ranking[index];
-              int itemnumber = index+1;
-
-              return ListTile(
-
-                title: Row(
-                  children: [
-                    Text('$itemnumber. ', style: theme.textTheme.bodyText1),
-                    Image.asset(
-                      'assets/buynsell/DevcomLogo.png',
-                      fit: BoxFit.fill,height: 50,width: 50,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(hostelName, style: theme.textTheme.bodyLarge),
-
-
-                    ),Spacer(),IconButton(onPressed: (){}, icon: Icon(Icons.expand_less_rounded),iconSize: 20,color: Colors.green,),Spacer(),
-                    Text((11-itemnumber).toString(), style: theme.textTheme.titleMedium),Spacer(),IconButton(onPressed: (){}, icon: Icon(Icons.expand_more_rounded),iconSize: 20,color: Colors.red,),Spacer(),
-                  ],
-                ),
-              );
-            }),
-      ),],),
-    ),);
+    return Scaffold(body: SafeArea(child: Column(children: [Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FittedBox(child: Center(child: Text(widget.gcname + " > " + widget.hostelname,style: theme.textTheme.headline4,))),
+    ),Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FittedBox(child: Center(child: Text("Current Points : "+ widget.gcpreviouspoints.toString(),style: theme.textTheme.headline5,))),
+    ),SizedBox(height: 50,),TextField(
+      decoration: InputDecoration(labelText: 'Add/Reduce Points'),
+      keyboardType: TextInputType.phone,
+    ),SizedBox(height: 50,),ElevatedButton(onPressed: (){Navigator.of(context).pop();},child: Text("Submit"),)])),);
   }
 }
 
