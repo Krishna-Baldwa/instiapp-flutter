@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+
 class QRPage extends StatefulWidget {
   const QRPage({Key? key}) : super(key: key);
 
@@ -161,4 +162,5 @@ class _QRPageState extends State<QRPage> {
           : null,
     );
   }
+
 }
