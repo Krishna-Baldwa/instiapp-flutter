@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_html/shims/dart_ui_real.dart';
 // import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'qr_encryption.dart';
+import 'package:encrypt/encrypt.dart' hide Key;
+
 
 
 class QRPage extends StatefulWidget {
@@ -26,14 +29,16 @@ class _QRPageState extends State<QRPage> {
   bool first = true;
   bool loading = true;
   bool error = false;
+  final qr_encryption= QREncryption();
 
   @override
   void initState() {
     super.initState();
   }
 
-  void getQRString(bloc) async {
-    String qr = await bloc.getQRString();
+  void getQRString(bloc)  {//removed async
+    //String qr = await bloc.getQRString();
+    String qr = (qr_encryption.Encrypt()).toString();
     if (qr == "Error") {
       setState(() {
         error = true;
