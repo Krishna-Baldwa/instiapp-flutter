@@ -18,6 +18,21 @@ final List<String> initial = [
   'Sports GC',
   'Tech GC',
 ];
+final List<String> hostels = ["Hostel6",
+  "Hostel4",
+  "Hostel7",
+  "Hostel3",
+  "Hostel1",
+  "Hostel5",
+  "Hostel10",
+  "Hostel11",
+  "Hostel2",
+  "Hostel13",
+  "Hostel9",
+  "Hostel8",
+  "Hostel12",
+  "Hostel14",
+  "Tansa"];
 
 final Map<String, List<String>> ranking = {
   'Overall': [
@@ -303,6 +318,17 @@ class _gcl_cardsState extends State<gcl_cards> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: Icon(Icons.add_outlined),
+        label: Text(" Add GC "),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context) => AddGC()));
+
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -427,21 +453,40 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                     return ListTile(
                       title: Row(
                         children: [
-                          Text('$itemNumber. ',
-                              style: theme.textTheme.bodyText1),
+                          SizedBox(
+                            width: width * 1 / 8,
+                            child: Center(
+                              child: Text('$itemNumber. ', style: theme.textTheme.bodyText1),
+                            ),
+                          ),
                           Image.asset(
                             'assets/buynsell/DevcomLogo.png',
                             fit: BoxFit.fill,
                             height: 60,
                             width: 60,
                           ),
+                          SizedBox(width: 8), // Add spacing between image and name
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(rankingItem,
-                                style: theme.textTheme.bodyLarge),
+                            padding: const EdgeInsets.all(12.0),
+                            child: FittedBox(
+                                child: SizedBox(
+                                  child: Text(rankingItem,
+                                      style: theme.textTheme.bodyLarge),
+                                  width: width * 2 / 8,
+                                )),
                           ),
+
+                          FittedBox(
+                              child: SizedBox(
+                                child: Center(
+                                    child: Text((00).toString(),
+                                        style: theme.textTheme.titleMedium)),
+                                width: width * 1 / 8,
+                              )),
+                          Spacer(),
                         ],
-                      ),
+                      )
+
                     );
                   },
                 ),
@@ -575,18 +620,36 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                   return ListTile(
                     title: Row(
                       children: [
-                        Text('$itemNumber. ', style: theme.textTheme.bodyText1),
+                        SizedBox(
+                          width: width * 1 / 8,
+                          child: Center(
+                            child: Text('$itemNumber. ', style: theme.textTheme.bodyText1),
+                          )),
                         Image.asset(
                           'assets/buynsell/DevcomLogo.png',
                           fit: BoxFit.fill,
-                          height: 50,
-                          width: 50,
+                          height: 60,
+                          width: 60,
                         ),
+                        SizedBox(width: 8), // Add spacing between image and name
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(rankingItem,
-                              style: theme.textTheme.bodyLarge),
+                          padding: const EdgeInsets.all(12.0),
+                          child: FittedBox(
+                              child: SizedBox(
+                                child: Text(rankingItem,
+                                    style: theme.textTheme.bodyLarge),
+                                width: width * 2 / 8,
+                              )),
                         ),
+
+                        FittedBox(
+                            child: SizedBox(
+                              child: Center(
+                                  child: Text((10).toString(),
+                                      style: theme.textTheme.titleMedium)),
+                              width: width * 1 / 8,
+                            )),
+                        Spacer(),
                       ],
                     ),
                   );
@@ -614,7 +677,7 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                             children: [
                               Spacer(),
                               SizedBox(
-                                  width: width / 4,
+                                  width: width / 3,
                                   child: Text(rankingItem,
                                       style: theme.textTheme.headline6)),
                               Spacer(),
@@ -805,6 +868,144 @@ class _numpadState extends State<numpad> {
       decoration: InputDecoration(labelText: 'Add/Reduce Points'),
       keyboardType: TextInputType.phone,
     ),SizedBox(height: 50,),ElevatedButton(onPressed: (){Navigator.of(context).pop();},child: Text("Submit"),)])),);
+  }
+}
+
+
+
+
+
+class AddGC extends StatefulWidget {
+  @override
+
+  _AddGCState createState() => _AddGCState();
+}
+
+class _AddGCState extends State<AddGC> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  TextEditingController _gcNameController = TextEditingController();
+  String _selectedGcType = initial[2];
+  List<String> _selectedHostels = [];
+
+  // List of available GC types for the dropdown menu
+  List<String> _gcTypes = ['Overall', 'Culturals GC', 'Sports GC', 'Tech GC'];
+
+  // List of available hostels for selection
+
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Scaffold(
+
+
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Add GC",
+                  style: theme.textTheme.headline3,
+                ),
+              ),
+                TextField(
+                  controller: _gcNameController,
+                  decoration: InputDecoration(
+                    labelText: "GC Name",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                DropdownButtonFormField<String>(
+                  value: _selectedGcType,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGcType = value!;
+                    });
+                  },
+                  items: initial.map((gcType) {
+                    return DropdownMenuItem<String>(
+                      value: gcType,
+                      child: Text(gcType),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    labelText: "GC Type",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  "Select Participating Hostels:",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8.0),
+                Wrap(
+                  spacing: 8.0,
+                  children: hostels.map((hostel) {
+                    return ChoiceChip(
+                      label: Text(hostel),
+                      selected: _selectedHostels.contains(hostel),
+                      onSelected: (selected) {
+                        setState(() {
+                          if (selected) {
+                            _selectedHostels.add(hostel);
+                          } else {
+                            _selectedHostels.remove(hostel);
+                          }
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 32.0),
+                ElevatedButton(
+                  onPressed: () {
+
+                    String gcName = _gcNameController.text;
+                    String gcType = _selectedGcType;
+                    Navigator.of(context).pop();
+
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("GC Added Successfully"),
+                      ),
+                    );
+                  },
+                  child: Text("Add GC"),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      key: _scaffoldKey,
+      drawer: NavDrawer(),
+      bottomNavigationBar: MyBottomAppBar(
+        shape: RoundedNotchedRectangle(),
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(
+              tooltip: "Show bottom sheet",
+              icon: Icon(
+                Icons.menu_outlined,
+                semanticLabel: "Show bottom sheet",
+              ),
+              onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
