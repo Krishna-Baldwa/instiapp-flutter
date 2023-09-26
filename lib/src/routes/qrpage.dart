@@ -25,7 +25,7 @@ class QRPage extends StatefulWidget {
 class _QRPageState extends State<QRPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  String? qrString;
+  String qrString="";
   bool first = true;
   bool loading = true;
   bool error = false;
@@ -36,8 +36,8 @@ class _QRPageState extends State<QRPage> {
     super.initState();
   }
 
-  void getQRString(bloc)  {//removed async
-    //String qr = await bloc.getQRString();
+  void getQRString(bloc) async {
+    // String qr = await bloc.getQRString();//useless code need to remove
     String qr = (qr_encryption.Encrypt()).toString();
     if (qr == "Error") {
       setState(() {
@@ -46,7 +46,8 @@ class _QRPageState extends State<QRPage> {
       });
     } else {
       setState(() {
-        qrString = qr;
+        qrString = (qr_encryption.Encrypt()).toString();
+        print(qrString);
         loading = false;
       });
     }
