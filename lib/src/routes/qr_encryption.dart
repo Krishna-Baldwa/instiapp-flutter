@@ -1,24 +1,24 @@
-import 'package:InstiApp/src/utils/common_widgets.dart';
-import 'package:InstiApp/src/utils/title_with_backbutton.dart';
+
 import 'package:encrypt/encrypt.dart';
 import 'dart:convert';
 import '../api/model/user.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class QREncryption {
-  User? user;
   String? number;
-  QREncryption() {
-     number = user!.userRollNumber!= null? user!.userRollNumber : 'Error' ;
+  QREncryption(User user) {
+    number= user?.userRollNumber ;
   }
-  Encrypted Encrypt(){
+  String Encrypt(){
     final time= DateTime.now().toString();
-    final message=time + number!;
-    final key= Key.fromUtf8('KeyOfLength32characters.........');
+    final message= number! + ',' + time;
+    String? encryption_key= dotenv.env['KEY'];
+    final key= Key.fromBase64(encryption_key!);
     final b64key = Key.fromBase64(base64Url.encode(key.bytes));
     final fernet = Fernet(b64key);
     final encrypter = Encrypter(fernet);
     final encrypted = encrypter.encrypt(message);
-    return encrypted;
+    return encrypted!.base64;
   }
 
 }

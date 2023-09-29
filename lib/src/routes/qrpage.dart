@@ -7,11 +7,10 @@ import 'package:InstiApp/src/drawer.dart';
 import 'package:InstiApp/src/utils/common_widgets.dart';
 import 'package:InstiApp/src/utils/title_with_backbutton.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_html/shims/dart_ui_real.dart';
-// import 'package:intl/intl.dart';
+
 import 'package:qr_flutter/qr_flutter.dart';
 import 'qr_encryption.dart';
-import 'package:encrypt/encrypt.dart' hide Key;
+import '../api/model/user.dart';
 
 
 
@@ -25,19 +24,20 @@ class QRPage extends StatefulWidget {
 class _QRPageState extends State<QRPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  String? qrString;
+  String? qrString ="";
   bool first = true;
   bool loading = true;
   bool error = false;
-  final qr_encryption= QREncryption();
+ User? profile;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void getQRString(bloc)  {//removed async
-    //String qr = await bloc.getQRString();
+  void getQRString(bloc) async {
+
+    final qr_encryption= QREncryption(profile!);
     String qr = (qr_encryption.Encrypt()).toString();
     if (qr == "Error") {
       setState(() {
@@ -46,7 +46,7 @@ class _QRPageState extends State<QRPage> {
       });
     } else {
       setState(() {
-        qrString = qr;
+        qrString = (qr_encryption.Encrypt()).toString();
         loading = false;
       });
     }
@@ -56,7 +56,7 @@ class _QRPageState extends State<QRPage> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var bloc = BlocProvider.of(context)!.bloc;
-
+    profile= bloc.currSession?.profile;
     if (first && bloc.currSession != null) {
       getQRString(bloc);
       first = false;
@@ -149,6 +149,7 @@ class _QRPageState extends State<QRPage> {
                                 data: '${qrString}',
                                 size: MediaQuery.of(context).size.width / 2,
                                 foregroundColor: Colors.black,
+                                embeddedImage: AssetImage('assets/buynsell/DevcomLogo.png'),
                               ),
                             ),
                 ],
