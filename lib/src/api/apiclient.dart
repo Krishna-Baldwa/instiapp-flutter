@@ -405,3 +405,9 @@ abstract class InstiAppApi {
   Future<BuynSellPost> createBuynSellPost(
       @rt.Header("Cookie") String sessionId, @rt.Body() BuynSellPost post);
 }
+// //GC Leaderboard
+// //5 get 1 post 1 put
+//   @rt.GET('/typegc/<type>/')
+//   Future<List<GC_type>> getTypeGC(
+//   @rt.Header
+// )
