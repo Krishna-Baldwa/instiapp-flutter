@@ -166,7 +166,7 @@ dispose(){
                                 data: '${qrString}',
                                 size: MediaQuery.of(context).size.width / 2,
                                 foregroundColor: Colors.black,
-                                embeddedImage:  AssetImage('assets/Devcom_Logo_Round/DC_logo_black.png'),
+                                embeddedImage:  AssetImage('assets/buynsell/DevcomLogo.png'),
                                 // embeddedImageStyle: QrEmbeddedImageStyle(size: Size(90,90) ),
 
                               ),
