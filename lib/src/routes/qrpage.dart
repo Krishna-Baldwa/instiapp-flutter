@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'qr_encryption.dart';
 import '../api/model/user.dart';
+import 'package:flutter/services.dart';
 
 
 
@@ -33,8 +34,22 @@ class _QRPageState extends State<QRPage> {
   @override
   void initState() {
     super.initState();
-  }
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
 
+  }
+@override
+dispose(){
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeRight,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  super.dispose();
+}
   void getQRString(bloc) async {
 
     final qr_encryption= QREncryption(profile!);
@@ -144,12 +159,16 @@ class _QRPageState extends State<QRPage> {
                               margin: EdgeInsets.all(50),
                               alignment: Alignment.center,
                               height: MediaQuery.of(context).size.height / 2,
+
                               child: QrImage(
+
                                 // data: '',
                                 data: '${qrString}',
                                 size: MediaQuery.of(context).size.width / 2,
                                 foregroundColor: Colors.black,
-                                embeddedImage: AssetImage('assets/buynsell/DevcomLogo.png'),
+                                embeddedImage:  AssetImage('assets/Devcom_Logo_Round/DC_logo_black.png'),
+                                // embeddedImageStyle: QrEmbeddedImageStyle(size: Size(90,90) ),
+
                               ),
                             ),
                 ],
