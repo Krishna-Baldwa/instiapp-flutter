@@ -1,4 +1,4 @@
- import 'dart:async';
+import 'dart:async';
 
 import 'package:InstiApp/src/routes/aboutpage.dart';
 import 'package:InstiApp/src/routes/bodypage.dart';
@@ -280,10 +280,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
                       cookie: widget.bloc.getSessionIdHeader()));
             } else if (temp.startsWith("/map/")) {
               return _buildRoute(
-                  settings,
-                  MapPage(
-                      location:temp.split("/map/")[1]));
-            }else if (temp.startsWith("/buyandsell/info")) {
+                  settings, MapPage(location: temp.split("/map/")[1]));
+            } else if (temp.startsWith("/buyandsell/info")) {
               return _buildRoute(
                   settings,
                   BuyAndSellInfoPage(

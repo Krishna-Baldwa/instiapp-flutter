@@ -1,24 +1,27 @@
-import 'dart:collection';
-
-import 'package:InstiApp/src/api/model/event.dart';
+import 'package:InstiApp/src/api/model/gcLeaderboard.dart';
 import 'package:InstiApp/src/bloc_provider.dart';
-import 'package:InstiApp/src/blocs/ia_bloc.dart';
-import 'package:InstiApp/src/drawer.dart';
-import 'package:InstiApp/src/routes/eventpage.dart';
-import 'package:InstiApp/src/routes/explorepage.dart';
-import 'package:InstiApp/src/routes/feedpage.dart';
-import 'package:InstiApp/src/utils/common_widgets.dart';
-import 'package:InstiApp/src/utils/title_with_backbutton.dart';
+import 'package:InstiApp/src/blocs/buynsell_post_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:InstiApp/src/drawer.dart';
+import 'package:InstiApp/src/utils/common_widgets.dart';
 
-final List<String> initial = [
-  'Overall',
-  'Culturals GC',
-  'Sports GC',
-  'Tech GC',
+import '../api/model/user.dart';
+import '../utils/title_with_backbutton.dart';
+import 'package:InstiApp/src/blocs/gcLeaderboard_bloc.dart';
+import 'package:InstiApp/src/drawer.dart';
+import 'package:InstiApp/src/utils/common_widgets.dart';
+import 'package:flutter/material.dart';
+
+final List<GCType> initial = [
+  GCType.Overall,
+  GCType.Cult,
+  GCType.Sports,
+  GCType.Tech
 ];
-final List<String> hostels = ["Hostel6",
+
+final List<String> hostels = [
+  "Hostel6",
   "Hostel4",
   "Hostel7",
   "Hostel3",
@@ -32,7 +35,8 @@ final List<String> hostels = ["Hostel6",
   "Hostel8",
   "Hostel12",
   "Hostel14",
-  "Tansa"];
+  "Tansa"
+];
 
 final Map<String, List<String>> ranking = {
   'Overall': [
@@ -284,7 +288,7 @@ final Map<String, List<String>> GCranking = {
   ],
 };
 
-final List<String> items = initial;
+//GC Cards for type iof GCs
 
 class gcl_cards extends StatefulWidget {
   @override
@@ -293,9 +297,13 @@ class gcl_cards extends StatefulWidget {
 
 class _gcl_cardsState extends State<gcl_cards> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
+    GCbloc GCBloc = BlocProvider.of(context)!.bloc.gcbloc;
+
     var theme = Theme.of(context);
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavDrawer(),
@@ -322,10 +330,8 @@ class _gcl_cardsState extends State<gcl_cards> {
         icon: Icon(Icons.add_outlined),
         label: Text(" Add GC "),
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-                builder: (context) => AddGC()));
-
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => AddGC()));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -343,9 +349,9 @@ class _gcl_cardsState extends State<gcl_cards> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: items.length,
+                  itemCount: initial.length,
                   itemBuilder: (context, index) {
-                    final gcName = items[index];
+                    final gcName = initial[index];
                     final gcRanking = ranking[gcName] ?? [];
                     final gcCompetitions = differentGCs[gcName] ?? [];
                     return InkWell(
@@ -367,7 +373,8 @@ class _gcl_cardsState extends State<gcl_cards> {
                         ),
                         title: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(gcName, style: theme.textTheme.headline5),
+                          child: Text(gcName.toString(),
+                              style: theme.textTheme.headline5),
                         ),
                       ),
                     );
@@ -381,7 +388,7 @@ class _gcl_cardsState extends State<gcl_cards> {
 }
 
 class GCRankings extends StatefulWidget {
-  final String gcName;
+  final GCType gcName;
   final List<String> gcRanking;
   final List<String> gcCompetitions;
 
@@ -397,6 +404,8 @@ class GCRankings extends StatefulWidget {
 class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   late TabController _tabController;
+  bool firstBuild = true;
+  bool loading = true;
 
   @override
   void initState() {
@@ -408,7 +417,17 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     var theme = Theme.of(context);
-    if (widget.gcName == 'Overall') {
+    var GCBloc = BlocProvider.of(context)!.bloc.gcbloc;
+
+    if (firstBuild) {
+      GCBloc.refresh(widget.gcName).then((value) {
+        setState(() {
+          loading = false;
+        });
+      });
+    }
+
+    if (widget.gcName == GCType.Overall) {
       return Scaffold(
         key: _scaffoldKey,
         drawer: NavDrawer(),
@@ -444,116 +463,139 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                 ),
               ),
               Expanded(
-                  child: TabBarView(controller: _tabController, children: [
-                ListView.builder(
-                  itemCount: widget.gcRanking.length,
-                  itemBuilder: (context, index) {
-                    final rankingItem = widget.gcRanking[index];
-                    int itemNumber = index + 1;
-                    return ListTile(
-                      title: Row(
-                        children: [
-                          SizedBox(
-                            width: width * 1 / 8,
-                            child: Center(
-                              child: Text('$itemNumber. ', style: theme.textTheme.bodyText1),
-                            ),
-                          ),
-                          Image.asset(
-                            'assets/buynsell/DevcomLogo.png',
-                            fit: BoxFit.fill,
-                            height: 60,
-                            width: 60,
-                          ),
-                          SizedBox(width: 8), // Add spacing between image and name
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: FittedBox(
-                                child: SizedBox(
-                                  child: Text(rankingItem,
-                                      style: theme.textTheme.bodyLarge),
-                                  width: width * 2 / 8,
-                                )),
-                          ),
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    RefreshIndicator(
+                      onRefresh: () async {
+                        await GCBloc.refresh(widget.gcName);
+                      },
+                      child: StreamBuilder<List<GCHostelPoints>>(
+                          stream: GCBloc.gcPosts,
+                          builder: (context,
+                              AsyncSnapshot<List<GCHostelPoints>> snapshot) {
+                            if (!snapshot.hasData)
+                              return CircularProgressIndicatorExtended();
+                            return ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                final GCHostelPoints rankingItem =
+                                    snapshot.data![index];
+                                int itemNumber = index + 1;
+                                return ListTile(
+                                    title: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: width * 1 / 8,
+                                      child: Center(
+                                        child: Text('$itemNumber. ',
+                                            style: theme.textTheme.bodyText1),
+                                      ),
+                                    ),
+                                    Image.asset(
+                                      'assets/buynsell/DevcomLogo.png',
+                                      fit: BoxFit.fill,
+                                      height: 60,
+                                      width: 60,
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            8), // Add spacing between image and name
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: FittedBox(
+                                          child: SizedBox(
+                                        child: Text(
+                                            rankingItem.hostel?.name ?? "Blank",
+                                            style: theme.textTheme.bodyLarge),
+                                        width: width * 2 / 8,
+                                      )),
+                                    ),
 
-                          FittedBox(
-                              child: SizedBox(
-                                child: Center(
-                                    child: Text((00).toString(),
-                                        style: theme.textTheme.titleMedium)),
-                                width: width * 1 / 8,
-                              )),
-                          Spacer(),
-                        ],
-                      )
-
-                    );
-                  },
-                ),
-                ListView.builder(
-                  itemCount: widget.gcCompetitions.length,
-                  itemBuilder: (context, index) {
-                    final String rankingItem = widget.gcCompetitions[index];
-
-                    return ListTile(
-                      title: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => particular_gc(
-                                      gcname: rankingItem,
-                                      Ranking: GCranking[rankingItem] ?? [],
+                                    FittedBox(
+                                        child: SizedBox(
+                                      child: Center(
+                                          child: Text(
+                                              rankingItem.points?.toString() ??
+                                                  "",
+                                              style:
+                                                  theme.textTheme.titleMedium)),
+                                      width: width * 1 / 8,
                                     )),
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Spacer(),
-                            Text(rankingItem, style: theme.textTheme.headline5),
-                            Spacer(),
-                            Column(
+                                    Spacer(),
+                                  ],
+                                ));
+                              },
+                            );
+                          }),
+                    ),
+                    ListView.builder(
+                      itemCount: widget.gcCompetitions.length,
+                      itemBuilder: (context, index) {
+                        final String rankingItem = widget.gcCompetitions[index];
+
+                        return ListTile(
+                          title: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => particular_gc(
+                                          gcname: rankingItem,
+                                          Ranking: GCranking[rankingItem] ?? [],
+                                        )),
+                              );
+                            },
+                            child: Row(
                               children: [
-                                Image.asset(
-                                  'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,
-                                  height: 80,
-                                  width: 80,
+                                Spacer(),
+                                Text(rankingItem,
+                                    style: theme.textTheme.headline5),
+                                Spacer(),
+                                Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/buynsell/DevcomLogo.png',
+                                      fit: BoxFit.fill,
+                                      height: 80,
+                                      width: 80,
+                                    ),
+                                    Text("Hostel 1")
+                                  ],
                                 ),
-                                Text("Hostel 1")
+                                Spacer(),
+                                Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/buynsell/DevcomLogo.png',
+                                      fit: BoxFit.fill,
+                                      height: 80,
+                                      width: 80,
+                                    ),
+                                    Text("Hostel 3")
+                                  ],
+                                ),
+                                Spacer(),
+                                Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/buynsell/DevcomLogo.png',
+                                      fit: BoxFit.fill,
+                                      height: 80,
+                                      width: 80,
+                                    ),
+                                    Text("Hostel 16")
+                                  ],
+                                ),
+                                Spacer()
                               ],
                             ),
-                            Spacer(),
-                            Column(
-                              children: [
-                                Image.asset(
-                                  'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,
-                                  height: 80,
-                                  width: 80,
-                                ),
-                                Text("Hostel 3")
-                              ],
-                            ),
-                            Spacer(),
-                            Column(
-                              children: [
-                                Image.asset(
-                                  'assets/buynsell/DevcomLogo.png',
-                                  fit: BoxFit.fill,
-                                  height: 80,
-                                  width: 80,
-                                ),
-                                Text("Hostel 16")
-                              ],
-                            ),
-                            Spacer()
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ]))
+              ),
             ],
           ),
         ),
@@ -612,49 +654,60 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
             ),
             Expanded(
                 child: TabBarView(controller: _tabController, children: [
-              ListView.builder(
-                itemCount: widget.gcRanking.length,
-                itemBuilder: (context, index) {
-                  final rankingItem = widget.gcRanking[index];
-                  int itemNumber = index + 1;
-                  return ListTile(
-                    title: Row(
-                      children: [
-                        SizedBox(
-                          width: width * 1 / 8,
-                          child: Center(
-                            child: Text('$itemNumber. ', style: theme.textTheme.bodyText1),
-                          )),
-                        Image.asset(
-                          'assets/buynsell/DevcomLogo.png',
-                          fit: BoxFit.fill,
-                          height: 60,
-                          width: 60,
-                        ),
-                        SizedBox(width: 8), // Add spacing between image and name
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: FittedBox(
-                              child: SizedBox(
-                                child: Text(rankingItem,
-                                    style: theme.textTheme.bodyLarge),
-                                width: width * 2 / 8,
-                              )),
-                        ),
+              StreamBuilder<List<GCHostelPoints>>(
+                  stream: GCBloc.gcPosts,
+                  builder:
+                      (context, AsyncSnapshot<List<GCHostelPoints>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return CircularProgressIndicatorExtended();
+                    }
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final rankingItem = snapshot.data![index];
+                        int itemNumber = index + 1;
+                        return ListTile(
+                          title: Row(
+                            children: [
+                              SizedBox(
+                                  width: width * 1 / 8,
+                                  child: Center(
+                                    child: Text('$itemNumber. ',
+                                        style: theme.textTheme.bodyText1),
+                                  )),
+                              Image.asset(
+                                'assets/buynsell/DevcomLogo.png',
+                                fit: BoxFit.fill,
+                                height: 60,
+                                width: 60,
+                              ),
+                              SizedBox(
+                                  width:
+                                      8), // Add spacing between image and name
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: FittedBox(
+                                    child: SizedBox(
+                                  child: Text(rankingItem.hostel?.name ?? "",
+                                      style: theme.textTheme.bodyLarge),
+                                  width: width * 2 / 8,
+                                )),
+                              ),
 
-                        FittedBox(
-                            child: SizedBox(
-                              child: Center(
-                                  child: Text((10).toString(),
-                                      style: theme.textTheme.titleMedium)),
-                              width: width * 1 / 8,
-                            )),
-                        Spacer(),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                              FittedBox(
+                                  child: SizedBox(
+                                child: Center(
+                                    child: Text(rankingItem.points.toString(),
+                                        style: theme.textTheme.titleMedium)),
+                                width: width * 1 / 8,
+                              )),
+                              Spacer(),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }),
               ListView.builder(
                 itemCount: widget.gcCompetitions.length,
                 itemBuilder: (context, index) {
@@ -682,7 +735,7 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                       style: theme.textTheme.headline6)),
                               Spacer(),
                               SizedBox(
-                                width: width / 6 ,
+                                width: width / 6,
                                 child: Column(
                                   children: [
                                     Image.asset(
@@ -692,7 +745,8 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                       width: 60,
                                     ),
                                     FittedBox(
-                                      child: Text(GCranking[rankingItem]![0].toString(),
+                                      child: Text(
+                                          GCranking[rankingItem]![0].toString(),
                                           style: theme.textTheme.bodyLarge),
                                     )
                                   ],
@@ -710,7 +764,8 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                       width: 60,
                                     ),
                                     FittedBox(
-                                      child: Text(GCranking[rankingItem]![1].toString(),
+                                      child: Text(
+                                          GCranking[rankingItem]![1].toString(),
                                           style: theme.textTheme.bodyLarge),
                                     )
                                   ],
@@ -728,7 +783,8 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                       width: 60,
                                     ),
                                     FittedBox(
-                                      child: Text(GCranking[rankingItem]![2].toString(),
+                                      child: Text(
+                                          GCranking[rankingItem]![2].toString(),
                                           style: theme.textTheme.bodyLarge),
                                     )
                                   ],
@@ -736,7 +792,10 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                               ),
                               Spacer()
                             ],
-                          ),SizedBox(height: 10,)
+                          ),
+                          SizedBox(
+                            height: 10,
+                          )
                         ],
                       ),
                     ),
@@ -818,15 +877,21 @@ class _particular_gcState extends State<particular_gc> {
                           Spacer(),
                           FittedBox(
                               child: Center(
-                                  child: SizedBox(width: width/6,
-                                    child: TextButton(
-                                        onPressed: () {Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                            builder: (context) => numpad(hostelname: hostelName,gcname: widget.gcname,gcpreviouspoints: (11-itemnumber),)));},
-                                        child: Text(
-                                          "Edit",
-                                        )),
-                                  ))),
+                                  child: SizedBox(
+                            width: width / 6,
+                            child: TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => numpad(
+                                            hostelname: hostelName,
+                                            gcname: widget.gcname,
+                                            gcpreviouspoints: (11 - itemnumber),
+                                          )));
+                                },
+                                child: Text(
+                                  "Edit",
+                                )),
+                          ))),
                           Spacer()
                         ],
                       ),
@@ -840,51 +905,75 @@ class _particular_gcState extends State<particular_gc> {
   }
 }
 
-
 class numpad extends StatefulWidget {
-
   final String hostelname;
   final String gcname;
   final int gcpreviouspoints;
 
-  numpad({required this.gcname,required this.hostelname,required this.gcpreviouspoints});
+  numpad(
+      {required this.gcname,
+      required this.hostelname,
+      required this.gcpreviouspoints});
   @override
   State<numpad> createState() => _numpadState();
 }
 
 class _numpadState extends State<numpad> {
   @override
-
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     var theme = Theme.of(context);
-    return Scaffold(body: SafeArea(child: Column(children: [Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: FittedBox(child: Center(child: Text(widget.gcname + " > " + widget.hostelname,style: theme.textTheme.headline4,))),
-    ),Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: FittedBox(child: Center(child: Text("Current Points : "+ widget.gcpreviouspoints.toString(),style: theme.textTheme.headline5,))),
-    ),SizedBox(height: 50,),TextField(
-      decoration: InputDecoration(labelText: 'Add/Reduce Points'),
-      keyboardType: TextInputType.phone,
-    ),SizedBox(height: 50,),ElevatedButton(onPressed: (){Navigator.of(context).pop();},child: Text("Submit"),)])),);
+    return Scaffold(
+      body: SafeArea(
+          child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FittedBox(
+              child: Center(
+                  child: Text(
+            widget.gcname + " > " + widget.hostelname,
+            style: theme.textTheme.headline4,
+          ))),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FittedBox(
+              child: Center(
+                  child: Text(
+            "Current Points : " + widget.gcpreviouspoints.toString(),
+            style: theme.textTheme.headline5,
+          ))),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        TextField(
+          decoration: InputDecoration(labelText: 'Add/Reduce Points'),
+          keyboardType: TextInputType.phone,
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text("Submit"),
+        )
+      ])),
+    );
   }
 }
 
-
-
-
-
 class AddGC extends StatefulWidget {
   @override
-
   _AddGCState createState() => _AddGCState();
 }
 
 class _AddGCState extends State<AddGC> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   TextEditingController _gcNameController = TextEditingController();
-  String _selectedGcType = initial[2];
+  GCType _selectedGcType = initial[2];
   List<String> _selectedHostels = [];
 
   // List of available GC types for the dropdown menu
@@ -892,26 +981,24 @@ class _AddGCState extends State<AddGC> {
 
   // List of available hostels for selection
 
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-
-
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "Add GC",
-                  style: theme.textTheme.headline3,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "Add GC",
+                    style: theme.textTheme.headline3,
+                  ),
                 ),
-              ),
                 TextField(
                   controller: _gcNameController,
                   decoration: InputDecoration(
@@ -920,7 +1007,7 @@ class _AddGCState extends State<AddGC> {
                   ),
                 ),
                 SizedBox(height: 16.0),
-                DropdownButtonFormField<String>(
+                DropdownButtonFormField<GCType>(
                   value: _selectedGcType,
                   onChanged: (value) {
                     setState(() {
@@ -928,9 +1015,9 @@ class _AddGCState extends State<AddGC> {
                     });
                   },
                   items: initial.map((gcType) {
-                    return DropdownMenuItem<String>(
+                    return DropdownMenuItem<GCType>(
                       value: gcType,
-                      child: Text(gcType),
+                      child: Text(gcType.toString()),
                     );
                   }).toList(),
                   decoration: InputDecoration(
@@ -965,11 +1052,9 @@ class _AddGCState extends State<AddGC> {
                 SizedBox(height: 32.0),
                 ElevatedButton(
                   onPressed: () {
-
                     String gcName = _gcNameController.text;
-                    String gcType = _selectedGcType;
+                    GCType gcType = _selectedGcType;
                     Navigator.of(context).pop();
-
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -1008,4 +1093,3 @@ class _AddGCState extends State<AddGC> {
     );
   }
 }
-

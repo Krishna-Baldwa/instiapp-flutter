@@ -28,6 +28,7 @@ import 'package:InstiApp/src/api/model/mess.dart';
 import 'package:InstiApp/src/api/model/user.dart';
 import 'package:InstiApp/src/blocs/explore_bloc.dart';
 import 'package:InstiApp/src/blocs/map_bloc.dart';
+import 'package:InstiApp/src/blocs/gcLeaderboard_bloc.dart';
 import 'package:InstiApp/src/blocs/achievementform_bloc.dart';
 import 'package:InstiApp/src/blocs/mess_calendar_bloc.dart';
 import 'package:InstiApp/src/drawer.dart';
@@ -132,6 +133,7 @@ class InstiAppBloc {
   late CommunityBloc communityBloc;
   late CommunityPostBloc communityPostBloc;
   late BuynSellPostBloc buynSellPostBloc;
+  late GCbloc gcbloc;
   // actual current state
   Session? currSession;
   var _hostels = <Hostel>[];
@@ -277,6 +279,7 @@ class InstiAppBloc {
     communityBloc = CommunityBloc(this);
     communityPostBloc = CommunityPostBloc(this);
     buynSellPostBloc = BuynSellPostBloc(this);
+    gcbloc = GCbloc(this);
 
     _initNotificationBatch();
   }

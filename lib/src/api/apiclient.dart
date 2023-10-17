@@ -37,13 +37,14 @@ import 'package:InstiApp/src/api/response/secret_response.dart';
 import 'package:InstiApp/src/api/model/mess.dart';
 import 'package:InstiApp/src/api/model/post.dart';
 import 'package:InstiApp/src/api/model/user.dart';
+import 'package:InstiApp/src/api/model/gcLeaderboard.dart';
 import 'package:InstiApp/src/api/response/user_tags_reach_response.dart';
 import 'package:retrofit/retrofit.dart' as rt;
 import 'package:dio/dio.dart';
 import 'model/offersecret.dart';
 part 'apiclient.g.dart';
 
-@rt.RestApi(baseUrl: "http://192.168.1.103:8000/api")
+@rt.RestApi(baseUrl: "http://192.168.1.100:8000/api")
 // @rt.RestApi(baseUrl: "http://10.105.177.150/api")
 // @rt.RestApi(baseUrl: "https://gymkhana.iitb.ac.in/instiapp/api")
 // @rt.RestApi(baseUrl: "https://272c-2405-201-5004-3c2f-d836-b028-6ac-ad9.ngrok-free.app/api")
@@ -404,10 +405,20 @@ abstract class InstiAppApi {
   @rt.POST("/buy/products")
   Future<BuynSellPost> createBuynSellPost(
       @rt.Header("Cookie") String sessionId, @rt.Body() BuynSellPost post);
+
+  //GC Leaderboard
+  @rt.GET('/typegclb/{type}')
+  Future<List<GCHostelPoints>> getTypeGCLB(
+      @rt.Header("Cookie") String sessionId, @rt.Path() int type);
+  @rt.GET('/overallgclb/')
+  Future<List<GCHostelPoints>> getGCLB(
+      @rt.Header("Cookie") String sessionId);
 }
-// //GC Leaderboard
-// //5 get 1 post 1 put
+
+//5 get 1 post 1 put
 //   @rt.GET('/typegc/<type>/')
 //   Future<List<GC_type>> getTypeGC(
-//   @rt.Header
+//   @rt.Header("Cookie")  String sessionId, @rt.Body()
 // )
+
+

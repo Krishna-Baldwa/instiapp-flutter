@@ -3,7 +3,7 @@ import './mess.dart';
 part 'gcLeaderboard.g.dart';
 
 @JsonSerializable()
-class GC{
+class GC {
   @JsonKey(name: "TYPE_CHOICE")
   String? typeChoice;
   @JsonKey(name: "id")
@@ -12,9 +12,21 @@ class GC{
   String? name;
   @JsonKey(name: "type")
   int? type;
+
+  GC({
+    this.name,
+    this.id,
+    this.type,
+    this.typeChoice,
+  });
+
+  factory GC.fromJson(Map<String, dynamic> json) => _$GCFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GCToJson(this);
 }
+
 @JsonSerializable()
-class GCHostelPoints{
+class GCHostelPoints {
   @JsonKey(name: "id")
   String? id;
   @JsonKey(name: "gc")
@@ -25,4 +37,17 @@ class GCHostelPoints{
   int? points;
   @JsonKey(name: "participants")
   String? participants;
+
+  GCHostelPoints({
+    this.id,
+    this.gc,
+    this.hostel,
+    this.participants,
+    this.points,
+  });
+
+  factory GCHostelPoints.fromJson(Map<String, dynamic> json) =>
+      _$GCHostelPointsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GCHostelPointsToJson(this);
 }
