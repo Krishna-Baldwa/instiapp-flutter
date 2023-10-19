@@ -44,7 +44,7 @@ import 'package:dio/dio.dart';
 import 'model/offersecret.dart';
 part 'apiclient.g.dart';
 
-@rt.RestApi(baseUrl: "http://192.168.1.100:8000/api")
+@rt.RestApi(baseUrl: "http://192.168.0.100:8000/api")
 // @rt.RestApi(baseUrl: "http://10.105.177.150/api")
 // @rt.RestApi(baseUrl: "https://gymkhana.iitb.ac.in/instiapp/api")
 // @rt.RestApi(baseUrl: "https://272c-2405-201-5004-3c2f-d836-b028-6ac-ad9.ngrok-free.app/api")
@@ -411,8 +411,7 @@ abstract class InstiAppApi {
   Future<List<GCHostelPoints>> getTypeGCLB(
       @rt.Header("Cookie") String sessionId, @rt.Path() int type);
   @rt.GET('/overallgclb/')
-  Future<List<GCHostelPoints>> getGCLB(
-      @rt.Header("Cookie") String sessionId);
+  Future<List<GCHostelPoints>> getGCLB(@rt.Header("Cookie") String sessionId);
 }
 
 //5 get 1 post 1 put

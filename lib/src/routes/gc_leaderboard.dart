@@ -5,19 +5,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:InstiApp/src/drawer.dart';
 import 'package:InstiApp/src/utils/common_widgets.dart';
-
 import '../api/model/user.dart';
-import '../utils/title_with_backbutton.dart';
 import 'package:InstiApp/src/blocs/gcLeaderboard_bloc.dart';
-import 'package:InstiApp/src/drawer.dart';
-import 'package:InstiApp/src/utils/common_widgets.dart';
-import 'package:flutter/material.dart';
 
 final List<GCType> initial = [
   GCType.Overall,
   GCType.Cult,
   GCType.Sports,
-  GCType.Tech
+  GCType.Tech,
 ];
 
 final List<String> hostels = [
@@ -349,36 +344,35 @@ class _gcl_cardsState extends State<gcl_cards> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: initial.length,
-                  itemBuilder: (context, index) {
-                    final gcName = initial[index];
-                    final gcRanking = ranking[gcName] ?? [];
-                    final gcCompetitions = differentGCs[gcName] ?? [];
-                    return InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => GCRankings(
-                              gcName: gcName,
-                              gcRanking: gcRanking,
-                              gcCompetitions: gcCompetitions,
-                            ),
+                itemCount: initial.length,
+                itemBuilder: (context, index) {
+                  final gcName = initial[index];
+                  final gcCompetitions = differentGCs[gcName] ?? [];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => GCRankings(
+                            gcName: gcName,
+                            gcCompetitions: gcCompetitions,
                           ),
-                        );
-                      },
-                      child: ListTile(
-                        leading: Image.asset(
-                          'assets/buynsell/DevcomLogo.png',
-                          fit: BoxFit.fill,
                         ),
-                        title: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(gcName.toString(),
-                              style: theme.textTheme.headline5),
-                        ),
+                      );
+                    },
+                    child: ListTile(
+                      leading: Image.asset(
+                        'assets/buynsell/DevcomLogo.png',
+                        fit: BoxFit.fill,
                       ),
-                    );
-                  }),
+                      title: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(gcName.toString().substring(7),
+                            style: theme.textTheme.headline5),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -389,13 +383,12 @@ class _gcl_cardsState extends State<gcl_cards> {
 
 class GCRankings extends StatefulWidget {
   final GCType gcName;
-  final List<String> gcRanking;
   final List<String> gcCompetitions;
 
-  GCRankings(
-      {required this.gcName,
-      required this.gcRanking,
-      required this.gcCompetitions});
+  GCRankings({
+    required this.gcName,
+    required this.gcCompetitions,
+  });
 
   @override
   State<GCRankings> createState() => _GCRankingsState();
@@ -420,11 +413,15 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
     var GCBloc = BlocProvider.of(context)!.bloc.gcbloc;
 
     if (firstBuild) {
-      GCBloc.refresh(widget.gcName).then((value) {
-        setState(() {
-          loading = false;
-        });
-      });
+      GCBloc.refresh(widget.gcName).then(
+        (value) {
+          setState(
+            () {
+              loading = false;
+            },
+          );
+        },
+      );
     }
 
     if (widget.gcName == GCType.Overall) {
@@ -471,19 +468,19 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                         await GCBloc.refresh(widget.gcName);
                       },
                       child: StreamBuilder<List<GCHostelPoints>>(
-                          stream: GCBloc.gcPosts,
-                          builder: (context,
-                              AsyncSnapshot<List<GCHostelPoints>> snapshot) {
-                            if (!snapshot.hasData)
-                              return CircularProgressIndicatorExtended();
-                            return ListView.builder(
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                final GCHostelPoints rankingItem =
-                                    snapshot.data![index];
-                                int itemNumber = index + 1;
-                                return ListTile(
-                                    title: Row(
+                        stream: GCBloc.gcPosts,
+                        builder: (context,
+                            AsyncSnapshot<List<GCHostelPoints>> snapshot) {
+                          if (!snapshot.hasData)
+                            return CircularProgressIndicatorExtended();
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              final GCHostelPoints rankingItem =
+                                  snapshot.data![index];
+                              int itemNumber = index + 1;
+                              return ListTile(
+                                title: Row(
                                   children: [
                                     SizedBox(
                                       width: width * 1 / 8,
@@ -504,30 +501,36 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                     Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: FittedBox(
-                                          child: SizedBox(
-                                        child: Text(
-                                            rankingItem.hostel?.name ?? "Blank",
-                                            style: theme.textTheme.bodyLarge),
-                                        width: width * 2 / 8,
-                                      )),
+                                        child: SizedBox(
+                                          child: Text(
+                                              rankingItem.hostel?.name ??
+                                                  "Blank",
+                                              style: theme.textTheme.bodyLarge),
+                                          width: width * 2 / 8,
+                                        ),
+                                      ),
                                     ),
 
                                     FittedBox(
-                                        child: SizedBox(
-                                      child: Center(
+                                      child: SizedBox(
+                                        child: Center(
                                           child: Text(
                                               rankingItem.points?.toString() ??
                                                   "",
                                               style:
-                                                  theme.textTheme.titleMedium)),
-                                      width: width * 1 / 8,
-                                    )),
+                                                  theme.textTheme.titleMedium),
+                                        ),
+                                        width: width * 1 / 8,
+                                      ),
+                                    ),
                                     Spacer(),
                                   ],
-                                ));
-                              },
-                            );
-                          }),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                     ListView.builder(
                       itemCount: widget.gcCompetitions.length,
