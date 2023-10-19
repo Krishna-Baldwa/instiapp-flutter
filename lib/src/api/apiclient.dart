@@ -412,7 +412,11 @@ abstract class InstiAppApi {
       @rt.Header("Cookie") String sessionId, @rt.Path() int type);
   @rt.GET('/overallgclb/')
   Future<List<GCHostelPoints>> getGCLB(@rt.Header("Cookie") String sessionId);
+  @rt.GET('/typegc/{type}')
+  Future<List<GC>> getListGC(
+      @rt.Header("Cookie") String sessionId, @rt.Path() int type);
 }
+
 
 //5 get 1 post 1 put
 //   @rt.GET('/typegc/<type>/')

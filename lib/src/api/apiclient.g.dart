@@ -1461,6 +1461,24 @@ class _InstiAppApi implements InstiAppApi {
     return value;
   }
 
+  @override
+  Future<List<GC>> getListGC(sessionId, type) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Cookie': sessionId};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<GC>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/typegc/${type}',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    var value = _result.data!
+        .map((dynamic i) => GC.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
