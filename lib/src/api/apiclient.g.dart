@@ -8,7 +8,7 @@ part of 'apiclient.dart';
 
 class _InstiAppApi implements InstiAppApi {
   _InstiAppApi(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://3bc8-103-21-127-80.ngrok-free.app/api';
+    baseUrl ??= 'http://192.168.187.161:8000/api';
   }
 
   final Dio _dio;
@@ -1475,6 +1475,42 @@ class _InstiAppApi implements InstiAppApi {
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
         .map((dynamic i) => GC.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  Future<GC> addGC(sessionId, gc) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Cookie': sessionId};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(gc.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GC>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/postGC',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GC.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<List<GCHostelPoints>> indivGC(sessionId, gcId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Cookie': sessionId};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = gcId;
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<GCHostelPoints>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'individualgclb/<gc_id>',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    var value = _result.data!
+        .map((dynamic i) => GCHostelPoints.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }

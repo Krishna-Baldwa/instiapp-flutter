@@ -8,21 +8,30 @@ class GCbloc {
   final String storageID = "GCPost";
 
   InstiAppBloc bloc;
-
+//add dadta type here
   List<GCHostelPoints> _gcPosts = [];
   List<GC> _gcList = [];
-
+  List<GCHostelPoints> _indivGC = [];
+//Build your stream here
   ValueStream<List<GCHostelPoints>> get gcPosts => _gcSubject.stream;
   final _gcSubject = BehaviorSubject<List<GCHostelPoints>>();
 
   ValueStream<List<GC>> get gcLists => _gclSubject.stream;
   final _gclSubject = BehaviorSubject<List<GC>>();
 
+  ValueStream<List<GCHostelPoints>> get indivgc => _indivgcSubject.stream;
+  final _indivgcSubject = BehaviorSubject<List<GCHostelPoints>>();
+
   String query = "";
 
   GCbloc(this.bloc);
 
   get gcposts => null;
+
+  Future<void> getIndivGC(String gcId) async {
+    _indivGC = await bloc.client.indivGC(bloc.getSessionIdHeader(), gcId);
+    _indivgcSubject.add(_indivGC);
+  }
 
   Future<void> refresh(GCType Type) async {
     switch (Type) {
@@ -64,5 +73,9 @@ class GCbloc {
     }
 
     _gclSubject.add(_gcList);
+  }
+
+  Future<void> addGC(GC gc) async {
+    await bloc.client.addGC(bloc.getSessionIdHeader(), gc);
   }
 }

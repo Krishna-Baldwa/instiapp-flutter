@@ -14,7 +14,7 @@ final List<GCType> initial = [
   GCType.Sports,
   GCType.Tech,
 ];
-
+GC gc = GC();
 final List<String> hostels = [
   "Hostel6",
   "Hostel4",
@@ -33,255 +33,29 @@ final List<String> hostels = [
   "Tansa"
 ];
 
-final Map<String, List<String>> ranking = {
-  'Overall': [
-    "Hostel6",
-    "Hostel4",
-    "Hostel7",
-    "Hostel3",
-    "Hostel1",
-    "Hostel5",
-    "Hostel10",
-    "Hostel11",
-    "Hostel2",
-    "Hostel13",
-    "Hostel9",
-    "Hostel8",
-    "Hostel12",
-    "Hostel14",
-    "Tansa"
-  ],
-  'Culturals GC': [
-    "Hostel6",
-    "Hostel7",
-    "Hostel4",
-    "Hostel3",
-    "Hostel1",
-    "Hostel5",
-    "Hostel10",
-    "Hostel11",
-    "Hostel2",
-    "Hostel13",
-    "Hostel9",
-    "Hostel8",
-    "Hostel12",
-    "Hostel14",
-    "Tansa"
-  ],
-  'Sports GC': [
-    "Hostel4",
-    "Hostel6",
-    "Hostel12",
-    "Hostel10",
-    "Hostel7",
-    "Hostel9",
-    "Hostel2",
-    "Hostel13",
-    "Hostel1",
-    "Hostel11",
-    "Hostel8",
-    "Hostel3",
-    "Hostel14",
-    "Tansa",
-    "Hostel5"
-  ],
-  'Tech GC': [
-    "Hostel11",
-    "Hostel3",
-    "Hostel5",
-    "Hostel2",
-    "Hostel9",
-    "Hostel7",
-    "Hostel8",
-    "Hostel13",
-    "Hostel1",
-    "Hostel6",
-    "Hostel14",
-    "Hostel12",
-    "Tansa",
-    "Hostel10",
-    "Hostel4"
-  ],
-};
-
 final Map<String, List<String>> differentGCs = {
   'Culturals GC': ['Dance GC', 'Music GC', 'Dramatics GC'],
   'Sports GC': ['Football GC', 'Chess GC', 'Basketball GC'],
   'Tech GC': ['Bot GC', 'Drone GC', 'Race GC'],
 };
 
-final Map<String, List<String>> GCranking = {
-  'Football GC': [
-    "Hostel6",
-    "Hostel4",
-    "Hostel7",
-    "Hostel3",
-    "Hostel1",
-    "Hostel5",
-    "Hostel10",
-    "Hostel11",
-    "Hostel2",
-    "Hostel13",
-    "Hostel9",
-    "Hostel8",
-    "Hostel12",
-    "Hostel14",
-    "Tansa"
-  ],
-  'Race GC': [
-    "Hostel6",
-    "Hostel7",
-    "Hostel4",
-    "Hostel3",
-    "Hostel1",
-    "Hostel5",
-    "Hostel10",
-    "Hostel11",
-    "Hostel2",
-    "Hostel13",
-    "Hostel9",
-    "Hostel8",
-    "Hostel12",
-    "Hostel14",
-    "Tansa"
-  ],
-  'Drone GC': [
-    "Hostel4",
-    "Hostel6",
-    "Hostel12",
-    "Hostel10",
-    "Hostel7",
-    "Hostel9",
-    "Hostel2",
-    "Hostel13",
-    "Hostel1",
-    "Hostel11",
-    "Hostel8",
-    "Hostel3",
-    "Hostel14",
-    "Tansa",
-    "Hostel5"
-  ],
-  'Bot GC': [
-    "Hostel11",
-    "Hostel3",
-    "Hostel5",
-    "Hostel2",
-    "Hostel9",
-    "Hostel7",
-    "Hostel8",
-    "Hostel13",
-    "Hostel1",
-    "Hostel6",
-    "Hostel14",
-    "Hostel12",
-    "Tansa",
-    "Hostel10",
-    "Hostel4"
-  ],
-  'Dramatics GC': [
-    "Hostel6",
-    "Hostel4",
-    "Hostel7",
-    "Hostel3",
-    "Hostel1",
-    "Hostel5",
-    "Hostel10",
-    "Hostel11",
-    "Hostel2",
-    "Hostel13",
-    "Hostel9",
-    "Hostel8",
-    "Hostel12",
-    "Hostel14",
-    "Tansa"
-  ],
-  'Chess GC': [
-    "Hostel6",
-    "Hostel7",
-    "Hostel4",
-    "Hostel3",
-    "Hostel1",
-    "Hostel5",
-    "Hostel10",
-    "Hostel11",
-    "Hostel2",
-    "Hostel13",
-    "Hostel9",
-    "Hostel8",
-    "Hostel12",
-    "Hostel14",
-    "Tansa"
-  ],
-  'Basketball GC': [
-    "Hostel4",
-    "Hostel6",
-    "Hostel12",
-    "Hostel10",
-    "Hostel7",
-    "Hostel9",
-    "Hostel2",
-    "Hostel13",
-    "Hostel1",
-    "Hostel11",
-    "Hostel8",
-    "Hostel3",
-    "Hostel14",
-    "Tansa",
-    "Hostel5"
-  ],
-  'Chess GC': [
-    "Hostel11",
-    "Hostel3",
-    "Hostel5",
-    "Hostel2",
-    "Hostel9",
-    "Hostel7",
-    "Hostel8",
-    "Hostel13",
-    "Hostel1",
-    "Hostel6",
-    "Hostel14",
-    "Hostel12",
-    "Tansa",
-    "Hostel10",
-    "Hostel4"
-  ],
-  'Dance GC': [
-    "Hostel4",
-    "Hostel6",
-    "Hostel12",
-    "Hostel10",
-    "Hostel7",
-    "Hostel9",
-    "Hostel2",
-    "Hostel13",
-    "Hostel1",
-    "Hostel11",
-    "Hostel8",
-    "Hostel3",
-    "Hostel14",
-    "Tansa",
-    "Hostel5"
-  ],
-  'Music GC': [
-    "Hostel11",
-    "Hostel3",
-    "Hostel5",
-    "Hostel2",
-    "Hostel9",
-    "Hostel7",
-    "Hostel8",
-    "Hostel13",
-    "Hostel1",
-    "Hostel6",
-    "Hostel14",
-    "Hostel12",
-    "Tansa",
-    "Hostel10",
-    "Hostel4"
-  ],
-};
+final List<String> GCranking = [
+  "Hostel11",
+  "Hostel3",
+  "Hostel5",
+  "Hostel2",
+  "Hostel9",
+  "Hostel7",
+  "Hostel8",
+  "Hostel13",
+  "Hostel1",
+  "Hostel6",
+  "Hostel14",
+  "Hostel12",
+  "Tansa",
+  "Hostel10",
+  "Hostel4"
+];
 
 //GC Cards for type iof GCs
 
@@ -673,12 +447,23 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                           return ListTile(
                             title: InkWell(
                               onTap: () {
+                                if (firstBuild) {
+                                  GCBloc.getIndivGC(rankingItem.id!).then(
+                                    (value) {
+                                      setState(
+                                        () {
+                                          loading = false;
+                                        },
+                                      );
+                                    },
+                                  );
+                                }
+
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                       builder: (context) => particular_gc(
                                             gcname: rankingItem.name ?? "",
-                                            Ranking:
-                                                GCranking[rankingItem] ?? [],
+                                            gcId: rankingItem.id!,
                                           )),
                                 );
                               },
@@ -781,16 +566,33 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
 
 class particular_gc extends StatefulWidget {
   final String gcname;
-  final List<String> Ranking;
+  final String gcId;
+
+  // final GCHostelPoints Ranking;
 
   @override
-  particular_gc({required this.gcname, required this.Ranking});
+  particular_gc({required this.gcname, required this.gcId});
   State<particular_gc> createState() => _particular_gcState();
 }
 
 class _particular_gcState extends State<particular_gc> {
+  bool firstBuild = true;
+  bool loading = true;
   @override
   Widget build(BuildContext context) {
+    var GCBloc = BlocProvider.of(context)!.bloc.gcbloc;
+    if (firstBuild) {
+      GCBloc.getIndivGC(widget.gcId).then(
+        (value) {
+          setState(
+            () {
+              loading = false;
+            },
+          );
+        },
+      );
+    }
+
     final width = MediaQuery.of(context).size.width;
     var theme = Theme.of(context);
     return Scaffold(
@@ -805,76 +607,93 @@ class _particular_gcState extends State<particular_gc> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: widget.Ranking.length,
-                itemBuilder: (context, index) {
-                  final hostelName = widget.Ranking[index];
-                  final hostelPoints = widget.Ranking[index];
-                  int itemnumber = index + 1;
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await GCBloc.getIndivGC(widget.gcId);
+                },
+                child: StreamBuilder<List<GCHostelPoints>>(
+                    stream: GCBloc.indivgc,
+                    builder: (context,
+                        AsyncSnapshot<List<GCHostelPoints>> snapshot) {
+                      if (!snapshot.hasData)
+                        return CircularProgressIndicatorExtended();
+                      return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          final GCHostelPoints rankingItem =
+                              snapshot.data![index];
 
-                  return ListTile(
-                    title: Row(
-                      children: [
-                        SizedBox(
-                            width: width * 1 / 8,
-                            child: Center(
-                                child: Text('$itemnumber. ',
-                                    style: theme.textTheme.bodyText1))),
-                        Image.asset(
-                          'assets/buynsell/DevcomLogo.png',
-                          fit: BoxFit.fill,
-                          height: 50,
-                          width: 50,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: FittedBox(
-                            child: SizedBox(
-                              child: Text(hostelName,
-                                  style: theme.textTheme.bodyLarge),
-                              width: width * 2 / 8,
-                            ),
-                          ),
-                        ),
-                        Spacer(),
-                        FittedBox(
-                          child: SizedBox(
-                            child: Center(
-                              child: Text((11 - itemnumber).toString(),
-                                  style: theme.textTheme.titleMedium),
-                            ),
-                            width: width * 1 / 8,
-                          ),
-                        ),
-                        Spacer(),
-                        FittedBox(
-                          child: Center(
-                            child: SizedBox(
-                              width: width / 6,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => numpad(
-                                        hostelname: hostelName,
-                                        gcname: widget.gcname,
-                                        gcpreviouspoints: (11 - itemnumber),
+                          int itemnumber = index + 1;
+
+                          return ListTile(
+                            title: Row(
+                              children: [
+                                SizedBox(
+                                    width: width * 1 / 8,
+                                    child: Center(
+                                        child: Text('$itemnumber. ',
+                                            style: theme.textTheme.bodyText1))),
+                                Image.asset(
+                                  'assets/buynsell/DevcomLogo.png',
+                                  fit: BoxFit.fill,
+                                  height: 50,
+                                  width: 50,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: FittedBox(
+                                    child: SizedBox(
+                                      child: Text(
+                                          rankingItem.hostel!.name ?? "",
+                                          style: theme.textTheme.bodyLarge),
+                                      width: width * 2 / 8,
+                                    ),
+                                  ),
+                                ),
+                                Spacer(),
+                                FittedBox(
+                                  child: SizedBox(
+                                    child: Center(
+                                      child: Text(rankingItem.points.toString(),
+                                          style: theme.textTheme.titleMedium),
+                                    ),
+                                    width: width * 1 / 8,
+                                  ),
+                                ),
+                                Spacer(),
+                                FittedBox(
+                                  child: Center(
+                                    child: SizedBox(
+                                      width: width / 6,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => numpad(
+                                                hostelname:
+                                                    rankingItem.hostel!.name ??
+                                                        "",
+                                                gcname: widget.gcname,
+                                                gcpreviouspoints:
+                                                    (11 - itemnumber),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          "Edit",
+                                        ),
                                       ),
                                     ),
-                                  );
-                                },
-                                child: Text(
-                                  "Edit",
+                                  ),
                                 ),
-                              ),
+                                Spacer()
+                              ],
                             ),
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
-                  );
-                },
+                          );
+                        },
+                      );
+                    }),
               ),
             ),
           ],
@@ -884,6 +703,7 @@ class _particular_gcState extends State<particular_gc> {
   }
 }
 
+//Change Points
 class numpad extends StatefulWidget {
   final String hostelname;
   final String gcname;
@@ -904,46 +724,54 @@ class _numpadState extends State<numpad> {
     var theme = Theme.of(context);
     return Scaffold(
       body: SafeArea(
-          child: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FittedBox(
-              child: Center(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FittedBox(
+                child: Center(
                   child: Text(
-            widget.gcname + " > " + widget.hostelname,
-            style: theme.textTheme.headline4,
-          ))),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FittedBox(
-              child: Center(
+                    widget.gcname + " > " + widget.hostelname,
+                    style: theme.textTheme.headline4,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FittedBox(
+                child: Center(
                   child: Text(
-            "Current Points : " + widget.gcpreviouspoints.toString(),
-            style: theme.textTheme.headline5,
-          ))),
+                    "Current Points : " + widget.gcpreviouspoints.toString(),
+                    style: theme.textTheme.headline5,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Add/Reduce Points'),
+              keyboardType: TextInputType.phone,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Submit"),
+            )
+          ],
         ),
-        SizedBox(
-          height: 50,
-        ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Add/Reduce Points'),
-          keyboardType: TextInputType.phone,
-        ),
-        SizedBox(
-          height: 50,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text("Submit"),
-        )
-      ])),
+      ),
     );
   }
 }
 
+//Add GC
 class AddGC extends StatefulWidget {
   @override
   _AddGCState createState() => _AddGCState();
@@ -957,9 +785,7 @@ class _AddGCState extends State<AddGC> {
 
   // List of available GC types for the dropdown menu
   List<String> _gcTypes = ['Overall', 'Culturals GC', 'Sports GC', 'Tech GC'];
-
   // List of available hostels for selection
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -978,27 +804,41 @@ class _AddGCState extends State<AddGC> {
                     style: theme.textTheme.headline3,
                   ),
                 ),
-                TextField(
+                TextFormField(
                   controller: _gcNameController,
                   decoration: InputDecoration(
                     labelText: "GC Name",
                     border: OutlineInputBorder(),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter item name';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    gc.name = value;
+                    print(gc.name);
+                  },
                 ),
                 SizedBox(height: 16.0),
                 DropdownButtonFormField<GCType>(
                   value: _selectedGcType,
                   onChanged: (value) {
-                    setState(() {
-                      _selectedGcType = value!;
-                    });
-                  },
-                  items: initial.map((gcType) {
-                    return DropdownMenuItem<GCType>(
-                      value: gcType,
-                      child: Text(gcType.toString()),
+                    setState(
+                      () {
+                        _selectedGcType = value!;
+                      },
                     );
-                  }).toList(),
+                  },
+                  items: initial.map(
+                    (gcType) {
+                      return DropdownMenuItem<GCType>(
+                        value: gcType,
+                        child: Text(gcType.toString()),
+                      );
+                    },
+                  ).toList(),
                   decoration: InputDecoration(
                     labelText: "GC Type",
                     border: OutlineInputBorder(),
@@ -1012,21 +852,23 @@ class _AddGCState extends State<AddGC> {
                 SizedBox(height: 8.0),
                 Wrap(
                   spacing: 8.0,
-                  children: hostels.map((hostel) {
-                    return ChoiceChip(
-                      label: Text(hostel),
-                      selected: _selectedHostels.contains(hostel),
-                      onSelected: (selected) {
-                        setState(() {
-                          if (selected) {
-                            _selectedHostels.add(hostel);
-                          } else {
-                            _selectedHostels.remove(hostel);
-                          }
-                        });
-                      },
-                    );
-                  }).toList(),
+                  children: hostels.map(
+                    (hostel) {
+                      return ChoiceChip(
+                        label: Text(hostel),
+                        selected: _selectedHostels.contains(hostel),
+                        onSelected: (selected) {
+                          setState(() {
+                            if (selected) {
+                              _selectedHostels.add(hostel);
+                            } else {
+                              _selectedHostels.remove(hostel);
+                            }
+                          });
+                        },
+                      );
+                    },
+                  ).toList(),
                 ),
                 SizedBox(height: 32.0),
                 ElevatedButton(
