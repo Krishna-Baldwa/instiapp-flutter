@@ -1,4 +1,5 @@
 import 'package:InstiApp/src/api/model/gcLeaderboard.dart';
+import 'package:InstiApp/src/api/model/mess.dart';
 import 'package:InstiApp/src/bloc_provider.dart';
 import 'package:InstiApp/src/blocs/buynsell_post_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,28 +11,12 @@ import 'package:InstiApp/src/blocs/gcLeaderboard_bloc.dart';
 
 final List<GCType> initial = [
   GCType.Overall,
-  GCType.Cult,
+  GCType.Culturals,
   GCType.Sports,
   GCType.Tech,
 ];
 GC gc = GC();
-final List<String> hostels = [
-  "Hostel6",
-  "Hostel4",
-  "Hostel7",
-  "Hostel3",
-  "Hostel1",
-  "Hostel5",
-  "Hostel10",
-  "Hostel11",
-  "Hostel2",
-  "Hostel13",
-  "Hostel9",
-  "Hostel8",
-  "Hostel12",
-  "Hostel14",
-  "Tansa"
-];
+List<Hostel> hostels = [];
 
 final Map<String, List<String>> differentGCs = {
   'Culturals GC': ['Dance GC', 'Music GC', 'Dramatics GC'],
@@ -57,7 +42,7 @@ final List<String> GCranking = [
   "Hostel4"
 ];
 
-//GC Cards for type iof GCs
+//GC Cards for type of GCs
 
 class gcl_cards extends StatefulWidget {
   @override
@@ -66,11 +51,10 @@ class gcl_cards extends StatefulWidget {
 
 class _gcl_cardsState extends State<gcl_cards> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  GlobalKey<_GCRankingsState> _gcRankingsKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    GCbloc GCBloc = BlocProvider.of(context)!.bloc.gcbloc;
-
     var theme = Theme.of(context);
 
     return Scaffold(
@@ -127,6 +111,7 @@ class _gcl_cardsState extends State<gcl_cards> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => GCRankings(
+                            key: _gcRankingsKey,
                             gcName: gcName,
                             gcCompetitions: gcCompetitions,
                           ),
@@ -162,7 +147,8 @@ class GCRankings extends StatefulWidget {
   GCRankings({
     required this.gcName,
     required this.gcCompetitions,
-  });
+    required Key key,
+  }) : super(key: key);
 
   @override
   State<GCRankings> createState() => _GCRankingsState();
@@ -170,6 +156,7 @@ class GCRankings extends StatefulWidget {
 
 class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   late TabController _tabController;
   bool firstBuild = true;
   bool loading = true;
@@ -372,6 +359,7 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                 children: [
                   RefreshIndicator(
                     onRefresh: () async {
+                      print("Reached here 2");
                       await GCBloc.refresh(widget.gcName);
                     },
                     child: StreamBuilder<List<GCHostelPoints>>(
@@ -447,24 +435,13 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                           return ListTile(
                             title: InkWell(
                               onTap: () {
-                                if (firstBuild) {
-                                  GCBloc.getIndivGC(rankingItem.id!).then(
-                                    (value) {
-                                      setState(
-                                        () {
-                                          loading = false;
-                                        },
-                                      );
-                                    },
-                                  );
-                                }
-
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                      builder: (context) => particular_gc(
-                                            gcname: rankingItem.name ?? "",
-                                            gcId: rankingItem.id!,
-                                          )),
+                                    builder: (context) => particular_gc(
+                                      gcname: rankingItem.name ?? "",
+                                      gcId: rankingItem.id!,
+                                    ),
+                                  ),
                                 );
                               },
                               child: Column(
@@ -784,7 +761,7 @@ class _AddGCState extends State<AddGC> {
   List<String> _selectedHostels = [];
 
   // List of available GC types for the dropdown menu
-  List<String> _gcTypes = ['Overall', 'Culturals GC', 'Sports GC', 'Tech GC'];
+  List<String> _gcTypes = ['Culturals', 'Sports', 'Tech GC'];
   // List of available hostels for selection
   @override
   Widget build(BuildContext context) {
@@ -835,7 +812,7 @@ class _AddGCState extends State<AddGC> {
                     (gcType) {
                       return DropdownMenuItem<GCType>(
                         value: gcType,
-                        child: Text(gcType.toString()),
+                        child: Text(gcType.toString().substring(7)),
                       );
                     },
                   ).toList(),
@@ -855,14 +832,14 @@ class _AddGCState extends State<AddGC> {
                   children: hostels.map(
                     (hostel) {
                       return ChoiceChip(
-                        label: Text(hostel),
-                        selected: _selectedHostels.contains(hostel),
+                        label: Text(hostel.name ?? ""),
+                        selected: _selectedHostels.contains(hostels),
                         onSelected: (selected) {
                           setState(() {
                             if (selected) {
-                              _selectedHostels.add(hostel);
+                              _selectedHostels.add(hostel.id ?? "");
                             } else {
-                              _selectedHostels.remove(hostel);
+                              _selectedHostels.remove(hostel.id ?? "");
                             }
                           });
                         },

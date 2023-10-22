@@ -1,3 +1,5 @@
+import 'package:analyzer/dart/ast/ast.dart';
+import 'package:jaguar/http/auth/fetcher.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:core';
 part 'mess.g.dart';
@@ -65,17 +67,17 @@ class HostelMess {
     7: "Sunday",
   };
 
-  HostelMess({
-    this.id,
-    this.breakfast,
-    this.day,
-    this.lunch,
-    this.snacks,
-    this.dinner,
-    this.hostel
-  });
+  HostelMess(
+      {this.id,
+      this.breakfast,
+      this.day,
+      this.lunch,
+      this.snacks,
+      this.dinner,
+      this.hostel});
 
-  factory HostelMess.fromJson(Map<String, dynamic> json) => _$HostelMessFromJson(json);
+  factory HostelMess.fromJson(Map<String, dynamic> json) =>
+      _$HostelMessFromJson(json);
 
   Map<String, dynamic> toJson() => _$HostelMessToJson(this);
 

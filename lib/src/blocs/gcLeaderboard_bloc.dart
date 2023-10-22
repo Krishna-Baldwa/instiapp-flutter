@@ -2,13 +2,13 @@ import 'package:InstiApp/src/api/model/gcLeaderboard.dart';
 import 'package:InstiApp/src/blocs/ia_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum GCType { Overall, Tech, Cult, Sports }
+enum GCType { Overall, Tech, Culturals, Sports }
 
 class GCbloc {
   final String storageID = "GCPost";
 
   InstiAppBloc bloc;
-//add dadta type here
+//add data type here
   List<GCHostelPoints> _gcPosts = [];
   List<GC> _gcList = [];
   List<GCHostelPoints> _indivGC = [];
@@ -37,18 +37,22 @@ class GCbloc {
     switch (Type) {
       case GCType.Overall:
         _gcPosts = (await bloc.client.getGCLB(bloc.getSessionIdHeader()));
+
         break;
       case GCType.Tech:
         _gcPosts =
             (await bloc.client.getTypeGCLB(bloc.getSessionIdHeader(), 1));
+
         break;
       case GCType.Sports:
         _gcPosts =
             (await bloc.client.getTypeGCLB(bloc.getSessionIdHeader(), 2));
+
         break;
-      case GCType.Cult:
+      case GCType.Culturals:
         _gcPosts =
             (await bloc.client.getTypeGCLB(bloc.getSessionIdHeader(), 3));
+
         break;
       default:
         return;
@@ -60,12 +64,15 @@ class GCbloc {
   Future<void> gcList(GCType Type) async {
     switch (Type) {
       case GCType.Tech:
+        print("Techaa");
         _gcList = (await bloc.client.getListGC(bloc.getSessionIdHeader(), 1));
         break;
       case GCType.Sports:
+        print("Sportsaa");
         _gcList = (await bloc.client.getListGC(bloc.getSessionIdHeader(), 2));
         break;
-      case GCType.Cult:
+      case GCType.Culturals:
+        print("Cultaa");
         _gcList = (await bloc.client.getListGC(bloc.getSessionIdHeader(), 3));
         break;
       default:
@@ -76,6 +83,6 @@ class GCbloc {
   }
 
   Future<void> addGC(GC gc) async {
-    await bloc.client.addGC(bloc.getSessionIdHeader(), gc);
+    await bloc.client.addGC(bloc.getSessionIdHeader());
   }
 }

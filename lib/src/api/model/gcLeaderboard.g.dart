@@ -11,6 +11,9 @@ GC _$GCFromJson(Map<String, dynamic> json) => GC(
       id: json['id'] as String?,
       type: json['type'] as int?,
       typeChoice: json['TYPE_CHOICE'] as String?,
+      participating_hostels: (json['participating_hostels'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$GCToJson(GC instance) => <String, dynamic>{
@@ -18,6 +21,7 @@ Map<String, dynamic> _$GCToJson(GC instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,
+      'participating_hostels': instance.participating_hostels,
     };
 
 GCHostelPoints _$GCHostelPointsFromJson(Map<String, dynamic> json) =>
@@ -27,7 +31,6 @@ GCHostelPoints _$GCHostelPointsFromJson(Map<String, dynamic> json) =>
       hostel: json['hostels'] == null
           ? null
           : Hostel.fromJson(json['hostels'] as Map<String, dynamic>),
-      participants: json['participants'] as String?,
       points: json['points'] as int?,
     );
 
@@ -37,5 +40,4 @@ Map<String, dynamic> _$GCHostelPointsToJson(GCHostelPoints instance) =>
       'gc': instance.gc,
       'hostels': instance.hostel,
       'points': instance.points,
-      'participants': instance.participants,
     };

@@ -8,7 +8,7 @@ part of 'apiclient.dart';
 
 class _InstiAppApi implements InstiAppApi {
   _InstiAppApi(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://192.168.187.161:8000/api';
+    baseUrl ??= 'http://192.168.0.100:8000/api';
   }
 
   final Dio _dio;
@@ -1480,13 +1480,12 @@ class _InstiAppApi implements InstiAppApi {
   }
 
   @override
-  Future<GC> addGC(sessionId, gc) async {
+  Future<GC> addGC(sessionId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Cookie': sessionId};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(gc.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GC>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, '/postGC',
@@ -1506,7 +1505,7 @@ class _InstiAppApi implements InstiAppApi {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<GCHostelPoints>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'individualgclb/<gc_id>',
+                .compose(_dio.options, 'individualgclb/{gcId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!

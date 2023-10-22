@@ -12,12 +12,15 @@ class GC {
   String? name;
   @JsonKey(name: "type")
   int? type;
+  @JsonKey(name: "participating_hostels")
+  List<String>? participating_hostels;
 
   GC({
     this.name,
     this.id,
     this.type,
     this.typeChoice,
+    this.participating_hostels,
   });
 
   factory GC.fromJson(Map<String, dynamic> json) => _$GCFromJson(json);
@@ -35,14 +38,11 @@ class GCHostelPoints {
   Hostel? hostel;
   @JsonKey(name: "points")
   int? points;
-  @JsonKey(name: "participants")
-  String? participants;
 
   GCHostelPoints({
     this.id,
     this.gc,
     this.hostel,
-    this.participants,
     this.points,
   });
 
