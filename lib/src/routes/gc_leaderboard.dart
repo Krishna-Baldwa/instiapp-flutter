@@ -262,21 +262,18 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                   height: 60,
                                   width: 60,
                                 ),
-                                SizedBox(
-                                    width:
-                                        8), // Add spacing between image and name
+                                SizedBox(width: 8),
                                 Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: FittedBox(
                                     child: SizedBox(
                                       child: Text(
-                                          rankingItem.hostel?.name ?? "Blank",
+                                          rankingItem.hostel?.id ?? "blank",
                                           style: theme.textTheme.bodyLarge),
                                       width: width * 2 / 8,
                                     ),
                                   ),
                                 ),
-
                                 FittedBox(
                                   child: SizedBox(
                                     child: Center(

@@ -36,6 +36,7 @@ class GCbloc {
   Future<void> refresh(GCType Type) async {
     switch (Type) {
       case GCType.Overall:
+        print("Overall");
         _gcPosts = (await bloc.client.getGCLB(bloc.getSessionIdHeader()));
 
         break;
