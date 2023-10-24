@@ -16,7 +16,7 @@ class GC {
   @JsonKey(name: "participating_hostels")
   List<String>? participating_hostels;
   @JsonKey(name: "body")
-  List<Body>? roleBodies;
+  String? roleBodies;
 
   GC({
     this.name,

@@ -14,9 +14,7 @@ GC _$GCFromJson(Map<String, dynamic> json) => GC(
       participating_hostels: (json['participating_hostels'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      roleBodies: (json['body'] as List<dynamic>?)
-          ?.map((e) => Body.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      roleBodies: json['body'] as String?,
     );
 
 Map<String, dynamic> _$GCToJson(GC instance) => <String, dynamic>{

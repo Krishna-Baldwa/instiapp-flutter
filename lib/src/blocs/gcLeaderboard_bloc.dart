@@ -1,6 +1,7 @@
 import 'package:InstiApp/src/api/model/gcLeaderboard.dart';
 import 'package:InstiApp/src/blocs/ia_bloc.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:InstiApp/src/api/response/typeGC.dart';
 
 enum GCType { Overall, Tech, Culturals, Sports }
 
@@ -10,14 +11,14 @@ class GCbloc {
   InstiAppBloc bloc;
 //add data type here
   List<GCHostelPoints> _gcPosts = [];
-  List<GC> _gcList = [];
+  List<TypeGC> _gcList = [];
   List<GCHostelPoints> _indivGC = [];
 //Build your stream here
   ValueStream<List<GCHostelPoints>> get gcPosts => _gcSubject.stream;
   final _gcSubject = BehaviorSubject<List<GCHostelPoints>>();
 
-  ValueStream<List<GC>> get gcLists => _gclSubject.stream;
-  final _gclSubject = BehaviorSubject<List<GC>>();
+  ValueStream<List<TypeGC>> get gcLists => _gclSubject.stream;
+  final _gclSubject = BehaviorSubject<List<TypeGC>>();
 
   ValueStream<List<GCHostelPoints>> get indivgc => _indivgcSubject.stream;
   final _indivgcSubject = BehaviorSubject<List<GCHostelPoints>>();
@@ -29,6 +30,7 @@ class GCbloc {
   get gcposts => null;
 
   Future<void> getIndivGC(String gcId) async {
+    print("Indiviual GC called");
     _indivGC = await bloc.client.indivGC(bloc.getSessionIdHeader(), gcId);
     _indivgcSubject.add(_indivGC);
   }

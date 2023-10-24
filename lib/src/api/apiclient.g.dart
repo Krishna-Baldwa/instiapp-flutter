@@ -8,7 +8,7 @@ part of 'apiclient.dart';
 
 class _InstiAppApi implements InstiAppApi {
   _InstiAppApi(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://192.168.50.151:8000/api';
+    baseUrl ??= 'https://2066-103-21-127-80.ngrok-free.app/api';
   }
 
   final Dio _dio;
@@ -1462,19 +1462,20 @@ class _InstiAppApi implements InstiAppApi {
   }
 
   @override
-  Future<List<GC>> getListGC(sessionId, type) async {
+  Future<List<TypeGC>> getListGC(sessionId, type) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Cookie': sessionId};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<GC>>(
-        Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/typegc/${type}',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<TypeGC>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/typegc/${type}',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) => GC.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => TypeGC.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }

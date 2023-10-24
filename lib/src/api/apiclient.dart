@@ -31,6 +31,7 @@ import 'package:InstiApp/src/api/response/community_post_list_response.dart';
 import 'package:InstiApp/src/api/response/event_create_response.dart';
 import 'package:InstiApp/src/api/response/explore_response.dart';
 import 'package:InstiApp/src/api/response/getencr_response.dart';
+import 'package:InstiApp/src/api/response/typeGC.dart';
 import 'package:InstiApp/src/api/response/image_upload_response.dart';
 import 'package:InstiApp/src/api/response/news_feed_response.dart';
 import 'package:InstiApp/src/api/response/secret_response.dart';
@@ -44,7 +45,7 @@ import 'package:dio/dio.dart';
 import 'model/offersecret.dart';
 part 'apiclient.g.dart';
 
-@rt.RestApi(baseUrl: "http://192.168.50.151:8000/api")
+@rt.RestApi(baseUrl: "https://2066-103-21-127-80.ngrok-free.app/api")
 // @rt.RestApi(baseUrl: "http://10.105.177.150/api")
 // @rt.RestApi(baseUrl: "https://gymkhana.iitb.ac.in/instiapp/api")
 // @rt.RestApi(baseUrl: "https://1c3a-103-21-127-80.ngrok-free.app/api")
@@ -413,7 +414,7 @@ abstract class InstiAppApi {
   @rt.GET('/overallgclb/')
   Future<List<GCHostelPoints>> getGCLB(@rt.Header("Cookie") String sessionId);
   @rt.GET('/typegc/{type}')
-  Future<List<GC>> getListGC(
+  Future<List<TypeGC>> getListGC(
       @rt.Header("Cookie") String sessionId, @rt.Path() int type);
   @rt.POST('/postGC')
   Future<GC> addGC(@rt.Header("Cookie") String sessionId);

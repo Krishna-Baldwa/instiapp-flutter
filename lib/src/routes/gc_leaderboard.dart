@@ -8,6 +8,7 @@ import 'package:InstiApp/src/drawer.dart';
 import 'package:InstiApp/src/utils/common_widgets.dart';
 import '../api/model/user.dart';
 import 'package:InstiApp/src/blocs/gcLeaderboard_bloc.dart';
+import 'package:InstiApp/src/api/response/typeGC.dart';
 
 final List<GCType> initial = [
   GCType.Overall,
@@ -268,7 +269,7 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                   child: FittedBox(
                                     child: SizedBox(
                                       child: Text(
-                                          rankingItem.hostel?.id ?? "blank",
+                                          rankingItem.hostel?.name ?? "blank",
                                           style: theme.textTheme.bodyLarge),
                                       width: width * 2 / 8,
                                     ),
@@ -418,9 +419,9 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                       },
                     ),
                   ),
-                  StreamBuilder<List<GC>>(
+                  StreamBuilder<List<TypeGC>>(
                     stream: GCBloc.gcLists,
-                    builder: (context, AsyncSnapshot<List<GC>> snapshot) {
+                    builder: (context, AsyncSnapshot<List<TypeGC>> snapshot) {
                       if (!snapshot.hasData) {
                         return CircularProgressIndicatorExtended();
                       }
@@ -428,6 +429,7 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           final rankingItem = snapshot.data![index];
+                          print(rankingItem.hostels!.length);
 
                           return ListTile(
                             title: InkWell(
@@ -435,8 +437,8 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => particular_gc(
-                                      gcname: rankingItem.name ?? "",
-                                      gcId: rankingItem.id!,
+                                      gcname: rankingItem.gc!.name ?? "",
+                                      gcId: rankingItem.gc!.id ?? "",
                                     ),
                                   ),
                                 );
@@ -448,73 +450,88 @@ class _GCRankingsState extends State<GCRankings> with TickerProviderStateMixin {
                                       Spacer(),
                                       SizedBox(
                                           width: width / 3,
-                                          child: Text(rankingItem.name ?? "",
+                                          child: Text(
+                                              rankingItem.gc?.name ?? "",
                                               style:
                                                   theme.textTheme.headline6)),
                                       Spacer(),
-                                      // SizedBox(
-                                      //   width: width / 6,
-                                      //   child: Column(
-                                      //     children: [
-                                      //       Image.asset(
-                                      //         'assets/buynsell/DevcomLogo.png',
-                                      //         fit: BoxFit.fill,
-                                      //         height: 60,
-                                      //         width: 60,
-                                      //       ),
-                                      //       FittedBox(
-                                      //         child: Text(
-                                      //             GCranking[rankingItem]![0]
-                                      //                 .toString(),
-                                      //             style: theme
-                                      //                 .textTheme.bodyLarge),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // Spacer(),
-                                      // SizedBox(
-                                      //   width: width / 6,
-                                      //   child: Column(
-                                      //     children: [
-                                      //       Image.asset(
-                                      //         'assets/buynsell/DevcomLogo.png',
-                                      //         fit: BoxFit.fill,
-                                      //         height: 60,
-                                      //         width: 60,
-                                      //       ),
-                                      //       FittedBox(
-                                      //         child: Text(
-                                      //             GCranking[rankingItem]![1]
-                                      //                 .toString(),
-                                      //             style: theme
-                                      //                 .textTheme.bodyLarge),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // Spacer(),
-                                      // SizedBox(
-                                      //   width: width / 6,
-                                      //   child: Column(
-                                      //     children: [
-                                      //       Image.asset(
-                                      //         'assets/buynsell/DevcomLogo.png',
-                                      //         fit: BoxFit.fill,
-                                      //         height: 60,
-                                      //         width: 60,
-                                      //       ),
-                                      //       FittedBox(
-                                      //         child: Text(
-                                      //             GCranking[rankingItem]![2]
-                                      //                 .toString(),
-                                      //             style: theme
-                                      //                 .textTheme.bodyLarge),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // Spacer()
+                                      SizedBox(
+                                        width: width / 6,
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              'assets/buynsell/DevcomLogo.png',
+                                              fit: BoxFit.fill,
+                                              height: 60,
+                                              width: 60,
+                                            ),
+                                            FittedBox(
+                                              child: Text(
+                                                  (rankingItem.hostels!
+                                                              .length ==
+                                                          0)
+                                                      ? ""
+                                                      : rankingItem.hostels?[0]
+                                                              .name ??
+                                                          "",
+                                                  style: theme
+                                                      .textTheme.bodyLarge),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      SizedBox(
+                                        width: width / 6,
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              'assets/buynsell/DevcomLogo.png',
+                                              fit: BoxFit.fill,
+                                              height: 60,
+                                              width: 60,
+                                            ),
+                                            FittedBox(
+                                              child: Text(
+                                                  (rankingItem.hostels!
+                                                              .length ==
+                                                          1)
+                                                      ? ""
+                                                      : rankingItem.hostels?[1]
+                                                              .name ??
+                                                          "",
+                                                  style: theme
+                                                      .textTheme.bodyLarge),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      SizedBox(
+                                        width: width / 6,
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              'assets/buynsell/DevcomLogo.png',
+                                              fit: BoxFit.fill,
+                                              height: 60,
+                                              width: 60,
+                                            ),
+                                            FittedBox(
+                                              child: Text(
+                                                  (rankingItem.hostels?[2] ==
+                                                          null)
+                                                      ? ""
+                                                      : rankingItem.hostels?[2]
+                                                              .name ??
+                                                          "",
+                                                  style: theme
+                                                      .textTheme.bodyLarge),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Spacer()
                                     ],
                                   ),
                                   SizedBox(
