@@ -5,8 +5,6 @@ part 'gcLeaderboard.g.dart';
 
 @JsonSerializable()
 class GC {
-  @JsonKey(name: "TYPE_CHOICE")
-  String? typeChoice;
   @JsonKey(name: "id")
   String? id;
   @JsonKey(name: "name")
@@ -14,15 +12,14 @@ class GC {
   @JsonKey(name: "type")
   int? type;
   @JsonKey(name: "participating_hostels")
-  List<String>? participating_hostels;
+  List<Hostel>? participating_hostels;
   @JsonKey(name: "body")
-  String? roleBodies;
+  Body? roleBodies;
 
   GC({
     this.name,
     this.id,
     this.type,
-    this.typeChoice,
     this.participating_hostels,
     this.roleBodies,
   });

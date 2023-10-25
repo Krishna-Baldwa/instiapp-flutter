@@ -21,6 +21,7 @@ import 'package:InstiApp/src/api/request/chatbotlog_request.dart';
 import 'package:InstiApp/src/api/request/comment_create_request.dart';
 import 'package:InstiApp/src/api/request/complaint_create_request.dart';
 import 'package:InstiApp/src/api/request/event_create_request.dart';
+import 'package:InstiApp/src/api/request/gc_create_request.dart';
 import 'package:InstiApp/src/api/request/postFAQ_request.dart';
 import 'package:InstiApp/src/api/request/update_community_post_request.dart';
 import 'package:InstiApp/src/api/request/user_fcm_patch_request.dart';
@@ -45,7 +46,7 @@ import 'package:dio/dio.dart';
 import 'model/offersecret.dart';
 part 'apiclient.g.dart';
 
-@rt.RestApi(baseUrl: "https://2066-103-21-127-80.ngrok-free.app/api")
+@rt.RestApi(baseUrl: "http://192.168.1.100:8000/api")
 // @rt.RestApi(baseUrl: "http://10.105.177.150/api")
 // @rt.RestApi(baseUrl: "https://gymkhana.iitb.ac.in/instiapp/api")
 // @rt.RestApi(baseUrl: "https://1c3a-103-21-127-80.ngrok-free.app/api")
@@ -408,19 +409,33 @@ abstract class InstiAppApi {
       @rt.Header("Cookie") String sessionId, @rt.Body() BuynSellPost post);
 
   //GC Leaderboard
+
+  @rt.PUT('/update_hostel_points/{id}/')
+  Future<void> updateHostelPoints(@rt.Header("Cookie") String sessionId,
+      @rt.Path() String id, @rt.Body() GCHostelPoints updatedPoints);
+
   @rt.GET('/typegclb/{type}')
   Future<List<GCHostelPoints>> getTypeGCLB(
       @rt.Header("Cookie") String sessionId, @rt.Path() int type);
+
   @rt.GET('/overallgclb/')
   Future<List<GCHostelPoints>> getGCLB(@rt.Header("Cookie") String sessionId);
+
   @rt.GET('/typegc/{type}')
   Future<List<TypeGC>> getListGC(
       @rt.Header("Cookie") String sessionId, @rt.Path() int type);
+
   @rt.POST('/postGC')
-  Future<GC> addGC(@rt.Header("Cookie") String sessionId);
-  @rt.GET("individualgclb/{gcId}")
-  Future<List<GCHostelPoints>> indivGC(
-      @rt.Header("Cookie") String sessionId, @rt.Body() String gcId);
+  Future<void> addGC(
+      @rt.Header("Cookie") String sessionId, @rt.Body() GCCreateRequest gc);
+
+  @rt.GET("/individualgclb/{gcId}")
+  Future<List<TypeGCindie>> indivGC(
+      @rt.Header("Cookie") String sessionId, @rt.Path() String gcId);
+
+  @rt.GET('/get_available_hostels_bodies')
+  Future<HostelBodies> getHostelandBodies(
+      @rt.Header("Cookie") String sessionId);
 }
 
 

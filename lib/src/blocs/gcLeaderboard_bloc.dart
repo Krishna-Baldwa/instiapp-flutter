@@ -1,4 +1,5 @@
 import 'package:InstiApp/src/api/model/gcLeaderboard.dart';
+import 'package:InstiApp/src/api/request/gc_create_request.dart';
 import 'package:InstiApp/src/blocs/ia_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:InstiApp/src/api/response/typeGC.dart';
@@ -12,7 +13,8 @@ class GCbloc {
 //add data type here
   List<GCHostelPoints> _gcPosts = [];
   List<TypeGC> _gcList = [];
-  List<GCHostelPoints> _indivGC = [];
+  List<TypeGCindie> _indivGC = [];
+  List<HostelBodies> _hostelAndBodies = [];
 //Build your stream here
   ValueStream<List<GCHostelPoints>> get gcPosts => _gcSubject.stream;
   final _gcSubject = BehaviorSubject<List<GCHostelPoints>>();
@@ -20,14 +22,24 @@ class GCbloc {
   ValueStream<List<TypeGC>> get gcLists => _gclSubject.stream;
   final _gclSubject = BehaviorSubject<List<TypeGC>>();
 
-  ValueStream<List<GCHostelPoints>> get indivgc => _indivgcSubject.stream;
-  final _indivgcSubject = BehaviorSubject<List<GCHostelPoints>>();
+  ValueStream<List<TypeGCindie>> get indivgc => _indivgcSubject.stream;
+  final _indivgcSubject = BehaviorSubject<List<TypeGCindie>>();
+
+  ValueStream<List<HostelBodies>> get hostelBodies =>
+      _hostelBodiesSubject.stream;
+  final _hostelBodiesSubject = BehaviorSubject<List<HostelBodies>>();
 
   String query = "";
 
   GCbloc(this.bloc);
 
   get gcposts => null;
+  Future<HostelBodies> getHostelBodies() async {
+    // _hostelAndBodies =
+    //     await bloc.client.getHostelandBodies(bloc.getSessionIdHeader());
+    // _hostelBodiesSubject.add(_hostelAndBodies);
+    return await bloc.client.getHostelandBodies(bloc.getSessionIdHeader());
+  }
 
   Future<void> getIndivGC(String gcId) async {
     print("Indiviual GC called");
@@ -85,7 +97,11 @@ class GCbloc {
     _gclSubject.add(_gcList);
   }
 
-  Future<void> addGC(GC gc) async {
-    await bloc.client.addGC(bloc.getSessionIdHeader());
+  Future<void> addGC(GCCreateRequest gc) async {
+    await bloc.client.addGC(bloc.getSessionIdHeader(), gc);
+  }
+
+  Future<void> updatePoints(GCHostelPoints points, String id) async {
+    await bloc.client.updateHostelPoints(bloc.getSessionIdHeader(), id, points);
   }
 }

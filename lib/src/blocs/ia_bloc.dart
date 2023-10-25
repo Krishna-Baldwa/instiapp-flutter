@@ -576,6 +576,16 @@ class InstiAppBloc {
         false;
   }
 
+  bool checkAllPermissions(String permission) {
+    if (currSession == null) {
+      return false;
+    }
+
+    return currSession?.profile?.userRoles?.any((element) =>
+            ((element.rolePermissions?.contains(permission) ?? false))) ??
+        false;
+  }
+
   // Section
   // Bloc state management
   Future<void> restorePrefs() async {

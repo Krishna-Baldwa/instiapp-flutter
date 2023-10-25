@@ -10,15 +10,15 @@ GC _$GCFromJson(Map<String, dynamic> json) => GC(
       name: json['name'] as String?,
       id: json['id'] as String?,
       type: json['type'] as int?,
-      typeChoice: json['TYPE_CHOICE'] as String?,
       participating_hostels: (json['participating_hostels'] as List<dynamic>?)
-          ?.map((e) => e as String)
+          ?.map((e) => Hostel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      roleBodies: json['body'] as String?,
+      roleBodies: json['body'] == null
+          ? null
+          : Body.fromJson(json['body'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$GCToJson(GC instance) => <String, dynamic>{
-      'TYPE_CHOICE': instance.typeChoice,
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,

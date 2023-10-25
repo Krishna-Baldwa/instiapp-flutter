@@ -8,7 +8,7 @@ part of 'apiclient.dart';
 
 class _InstiAppApi implements InstiAppApi {
   _InstiAppApi(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://2066-103-21-127-80.ngrok-free.app/api';
+    baseUrl ??= 'http://192.168.1.100:8000/api';
   }
 
   final Dio _dio;
@@ -1424,6 +1424,22 @@ class _InstiAppApi implements InstiAppApi {
   }
 
   @override
+  Future<void> updateHostelPoints(sessionId, id, updatedPoints) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Cookie': sessionId};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(updatedPoints.toJson());
+    await _dio.fetch<void>(_setStreamType<void>(
+        Options(method: 'PUT', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/update_hostel_points/${id}/',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return null;
+  }
+
+  @override
   Future<List<GCHostelPoints>> getTypeGCLB(sessionId, type) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -1481,37 +1497,54 @@ class _InstiAppApi implements InstiAppApi {
   }
 
   @override
-  Future<GC> addGC(sessionId) async {
+  Future<void> addGC(sessionId, gc) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Cookie': sessionId};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GC>(
+    _data.addAll(gc.toJson());
+    await _dio.fetch<void>(_setStreamType<void>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, '/postGC',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GC.fromJson(_result.data!);
-    return value;
+    return null;
   }
 
   @override
-  Future<List<GCHostelPoints>> indivGC(sessionId, gcId) async {
+  Future<List<TypeGCindie>> indivGC(sessionId, gcId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Cookie': sessionId};
     _headers.removeWhere((k, v) => v == null);
-    final _data = gcId;
+    final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<GCHostelPoints>>(
+        _setStreamType<List<TypeGCindie>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'individualgclb/{gcId}',
+                .compose(_dio.options, '/individualgclb/${gcId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) => GCHostelPoints.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => TypeGCindie.fromJson(i as Map<String, dynamic>))
         .toList();
+    return value;
+  }
+
+  @override
+  Future<HostelBodies> getHostelandBodies(sessionId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Cookie': sessionId};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HostelBodies>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/get_available_hostels_bodies',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = HostelBodies.fromJson(_result.data!);
     return value;
   }
 

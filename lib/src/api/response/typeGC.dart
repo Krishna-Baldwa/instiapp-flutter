@@ -20,3 +20,40 @@ class TypeGC {
 
   Map<String, dynamic> toJson() => _$TypeGCToJson(this);
 }
+
+@JsonSerializable()
+class TypeGCindie {
+  @JsonKey(name: "hostel")
+  Hostel? hostels;
+  @JsonKey(name: "points")
+  int? points;
+  @JsonKey(name: "id")
+  String? id;
+
+  TypeGCindie({
+    this.hostels,
+    this.points,
+    this.id,
+  });
+  factory TypeGCindie.fromJson(Map<String, dynamic> json) =>
+      _$TypeGCindieFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TypeGCindieToJson(this);
+}
+
+@JsonSerializable()
+class HostelBodies {
+  @JsonKey(name: "hostels")
+  List<Hostel>? hostels;
+  @JsonKey(name: "bodies")
+  List<Body>? bodies;
+
+  HostelBodies({
+    this.hostels,
+    this.bodies,
+  });
+  factory HostelBodies.fromJson(Map<String, dynamic> json) =>
+      _$HostelBodiesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HostelBodiesToJson(this);
+}
