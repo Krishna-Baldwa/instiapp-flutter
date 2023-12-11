@@ -10,7 +10,7 @@ description: Flutter App for Indian Institute of Technology, Bombay
 version: 2.4.1+29
 
 environment:
-  sdk: '>=2.15.0 <3.0.0'
+  sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -66,6 +66,7 @@ dependencies:
   flutter_linkify: ^5.0.2
   upgrader: ^4.11.1
   encrypt: ^5.0.1
+  markdown_editable_textinput: ^2.2.0
 
 dev_dependencies:
   flutter_test:

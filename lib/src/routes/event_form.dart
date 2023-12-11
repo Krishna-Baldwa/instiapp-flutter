@@ -20,6 +20,9 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
+
+
+
 class CreateEventBtn extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final Function formPoster;
@@ -570,6 +573,7 @@ class _EventFormState extends State<EventForm> {
   late String StrID;
   TextEditingController eventNameController = TextEditingController();
   TextEditingController eventDescController = TextEditingController();
+  TextEditingController eventLongDescController = TextEditingController();
   late List<Interest> eventInterests = [];
   late List<OfferedAchievements> eventAchievementsOffered = [];
   late String eventImageURL = placeHolderImage;
@@ -937,11 +941,23 @@ class _EventFormState extends State<EventForm> {
                     maxLines: 4,
                     controller: eventDescController,
                     decoration: InputDecoration(
-                      label: Text('Description'),
+                      label: Text('Short Description'),
                     ),
                     style: TextStyle(),
                   ),
-                ),
+                ),Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 4,
+                    controller: eventLongDescController,
+                    decoration: InputDecoration(
+                      label: Text('Long Description'),
+                    ),
+                    style: TextStyle(),
+                  ),
+                ), 
+          
                 // SelectInterests(
                 //   loadableInterests: loadableInterests,
                 //   updateInterests: (i) {
