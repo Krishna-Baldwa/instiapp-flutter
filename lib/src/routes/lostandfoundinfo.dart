@@ -46,7 +46,7 @@ class _LostAndFoundInfoPageState extends State<LostAndFoundInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    // List<String>? imageList = bnsPost?.imageUrl;
+    List<String>? imageList = lnfPost?.imageUrl;
     double screen_wr = MediaQuery.of(context).size.width;
     double screen_hr = MediaQuery.of(context).size.height;
     double x, y;
@@ -112,7 +112,7 @@ class _LostAndFoundInfoPageState extends State<LostAndFoundInfoPage> {
                 child: SizedBox(
                   height: screen_h / 1.2,
                   width: screen_w / 1,
-                  // child: ImageCarousel(imageList),
+                  child: ImageCarousel(imageList),
                 ),
               ),
               Spacer(),
