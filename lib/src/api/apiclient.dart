@@ -48,7 +48,7 @@ part 'apiclient.g.dart';
 
 //@rt.RestApi(baseUrl: "http://192.168.1.103:8000/api")
 // @rt.RestApi(baseUrl: "http://10.105.177.150/api")
-@rt.RestApi(baseUrl: "https://gymkhana.iitb.ac.in/profiles/oauth/authorize/?client_id=Ovpt0dXpmB8MIGhV6ZeADQ×NQ7xuaa3ntITZwqPX&response_type=code&scope=basic%20profile%20picture%20sex%20ldap%20phone%20insti_address%20program%20secondary_emails&redirect_uri=https://www.insti.app/login-android.html")
+@rt.RestApi(baseUrl: "https://gymkhana.iitb.ac.in/profiles/oauth/authorize/?client_id=Ovpt0dXpmB8MIGhV6ZeADQxNQ7xuaa3ntITZwqPX&response_type=code&scope=basic%20profile%20picture%20sex%20ldap%20phone%20insti_address%20program%20secondary_emails&redirect_uri=https://www.insti.app/login-android.html")
 // @rt.RestApi(baseUrl: "https://272c-2405-201-5004-3c2f-d836-b028-6ac-ad9.ngrok-free.app/api")
 abstract class InstiAppApi {
   factory InstiAppApi(Dio dio, {String baseUrl}) = _InstiAppApi;
