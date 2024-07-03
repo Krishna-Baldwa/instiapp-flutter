@@ -8,7 +8,7 @@ part of 'apiclient.dart';
 
 class _InstiAppApi implements InstiAppApi {
   _InstiAppApi(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://gymkhana.iitb.ac.in/profiles/oauth/authorize/?client_id=Ovpt0dXpmB8MIGhV6ZeADQxNQ7xuaa3ntITZwqPX&response_type=code&scope=basic%20profile%20picture%20sex%20ldap%20phone%20insti_address%20program%20secondary_emails&redirect_uri=https://www.insti.app/login-android.html';
+    baseUrl ??= 'http://10.198.49.150/api';
   }
 
   final Dio _dio;
